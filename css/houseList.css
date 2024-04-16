@@ -52,7 +52,7 @@
   z-index: 1; /* 텍스트와 이미지가 오버레이 위에 오도록 z-index 높이기 */
 }
 .houseListBtn {
-  background-image: url("https://i.namu.wiki/i/Lzm1Trx9RF623l4lXZNIzgSS9g21k-4FpRwNVcPA9hDbR1E2ICPk9dJQbIM8HjHYLPh-A5iWPkH3pKMdAPOP0A.webp");
+  background-image: url("https://thumbnail.10x10.co.kr/webimage/image/basic600/429/B004296279.jpg?cmd=thumb&w=400&h=400&fit=true&ws=false");
   background-position: center;
   background-size: cover;
   width: 80px;
