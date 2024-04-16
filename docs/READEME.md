@@ -86,7 +86,7 @@
   - [ ] 날씨api 가져오기
   - [ ] home으로 돌아오는 링크
 
-### 개인소개 페이지 파트
+### 기숙사 페이지 파트
 
 - [ ] 기숙사페이지 레이아웃 디자인
 - [ ] 기숙사별 소개,로고, 사진 데이터
@@ -185,12 +185,13 @@
         {
         "name": "Ron Weasley",
         "image": "https://example.com/images/ron.jpg",
-        "age": 16,
-        "location": "London",
+        "advantages": "Quick thinker, strategic mind",
+        "style": "Casual, prefers direct communication",
+        "blogUrl": "https://ronweasleyblog.com",
         "mbti": "ESTP",
-        "hobbies": ["Chess", "Adventures"],
-        "comment": "I'm the sixth in our family to go to Hogwarts. You could say I got a lot to live up to."
+        "introduction": "Loyal friend and a natural leader."
         }
+
 
 
 
@@ -199,11 +200,11 @@
         "memberId": "3",
         "name": "Ron Weasley",
         "image": "https://example.com/images/ron.jpg",
-        "age": 16,
-        "location": "London",
+        "advantages": "Quick thinker, strategic mind",
+        "style": "Casual, prefers direct communication",
+        "blogUrl": "https://ronweasleyblog.com",
         "mbti": "ESTP",
-        "hobbies": ["Chess", "Adventures"],
-        "comment": "I'm the sixth in our family to go to Hogwarts. You could say I got a lot to live up to."
+        "introduction": "Loyal friend and a natural leader."
         }
 
 - 멤버 정보 수정
@@ -213,26 +214,27 @@
   요청, 응답 예시:
 
         {
-        "name": "Hermione Granger",
-        "image": "https://example.com/images/hermione_updated.jpg",
-        "age": 18,
-        "location": "London",
-        "mbti": "INFJ",
-        "hobbies": ["Reading", "Magic Research"],
-        "comment": "Books and cleverness! There are more important things—friendship and bravery."
+        "name": "Ron Weasley",
+        "image": "https://example.com/images/ron_new.jpg",
+        "advantages": "Excellent strategist, reliable partner",
+        "style": "Proactive, team-oriented",
+        "blogUrl": "https://newronweasleyblog.com",
+        "mbti": "ESTP",
+        "introduction": "I've grown from my experiences and ready to lead."
         }
+
 
 
         {
         "success": true,
-        "memberId": "2",
-        "name": "Hermione Granger",
-        "image": "https://example.com/images/hermione_updated.jpg",
-        "age": 18,
-        "location": "London",
-        "mbti": "INFJ",
-        "hobbies": ["Reading", "Magic Research"],
-        "comment": "Books and cleverness! There are more important things—friendship and bravery."
+        "memberId": "3",
+        "name": "Ron Weasley",
+        "image": "https://example.com/images/ron_new.jpg",
+        "advantages": "Excellent strategist, reliable partner",
+        "style": "Proactive, team-oriented",
+        "blogUrl": "https://newronweasleyblog.com",
+        "mbti": "ESTP",
+        "introduction": "I've grown from my experiences and ready to lead."
         }
 
 - 멤버 삭제

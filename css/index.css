@@ -1,0 +1,33 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  background-image: url("/Users/ieungyu/Desktop/Programing/js-4team/img/111.jpeg");
+  background-position: center;
+  background-size: cover;
+}
+
+body::before {
+  content: ""; /* 필수 */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* 투명 흰 배경 설정, 배경 이미지 대신 */
+  opacity: 0.5; /* 투명도 조정 */
+}
