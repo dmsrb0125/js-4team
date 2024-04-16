@@ -18,16 +18,13 @@
     <link rel="stylesheet" href="css/houseList.css" />
 
     <script type="module">
-      // Firebase SDK 라이브러리 가져오기
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
       import {
+        getFirestore,
         collection,
-        addDoc,
+        getDocs,
       } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
         apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
         authDomain: "js-4teamproject.firebaseapp.com",
@@ -38,30 +35,61 @@
         measurementId: "G-ZGBX3PPB98",
       };
 
-      // Firebase 인스턴스 초기화
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
-      async function loadHouses() {
+
+      async function loadHousesAndMembers() {
         const querySnapshot = await getDocs(collection(db, "houses"));
         const houseList = document.querySelector(".houseList");
 
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(async (doc) => {
           const houseData = doc.data();
           const houseDiv = document.createElement("div");
+          houseDiv.style.backgroundImage = `url(${houseData.image})`;
+          houseDiv.style.backgroundPosition = "center";
+          houseDiv.style.backgroundSize = "cover";
           houseDiv.className = "house";
           houseDiv.innerHTML = `
-      
-      <img src="${houseData.image}" alt="${houseData.name}" style="width:50px; height:50px;">
-      <div class="house-name">${houseData.name}</div>
-    `;
+            <img src="${houseData.logo}" alt="${houseData.name}" style="width:50px; height:50px;">
+            <div class="house-name">${houseData.name}</div>
+          `;
+
+          // Attach a click event to navigate to the house detail page
           houseDiv.addEventListener("click", () => {
             window.location.href = `house.html?houseId=${doc.id}`;
           });
+
+          // Load members directly under each house
+          const membersSnapshot = await getDocs(
+            collection(db, "houses", doc.id, "members")
+          );
+          const membersDiv = document.createElement("div");
+          membersDiv.className = "members";
+
+          membersSnapshot.forEach((memberDoc) => {
+            const memberData = memberDoc.data();
+            const memberItem = document.createElement("div");
+            memberItem.className = "member";
+            memberItem.innerHTML = `
+              <img src="${memberData.image}" alt="${memberData.name}" style="width:60px; height:60px;">
+              <span>${memberData.name}</span>
+            `;
+            membersDiv.appendChild(memberItem);
+          });
+
+          houseDiv.appendChild(membersDiv);
           houseList.appendChild(houseDiv);
         });
       }
 
-      window.addEventListener("DOMContentLoaded", loadHouses);
+      window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+      $(".houseListBtn").click(function () {
+        if ($(".houseList").css("display") === "none") {
+          $(".houseList").css("display", "flex");
+        } else {
+          $(".houseList").css("display", "none");
+        }
+      });
     </script>
   </head>
 
@@ -74,6 +102,8 @@
       <h1>팀소개</h1>
     </div>
     <hr class="featurette-divider" />
+    <button class="houseListBtn"></button>
     <div class="houseList"></div>
+    <!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
   </body>
 </html>

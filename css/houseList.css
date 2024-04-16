@@ -1,5 +1,5 @@
 .houseList {
-  height: 350px;
+  height: 400px;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -10,22 +10,66 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer; /* 마우스 포인터를 손가락 모양으로 변경 */
-  border: 1px solid #ccc; /* 경계선 스타일 */
+  cursor: pointer;
+  border: 1px solid #ccc;
   padding: 10px;
   margin: 10px;
-  transition: background-color 0.3s; /* 호버 효과 */
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
-.house:hover {
-  background-color: #f0f0f0; /* 마우스 호버 시 배경색 변경 */
+.house::before {
+  content: ""; /* 필수: 가상 요소의 내용 */
+  position: absolute; /* 상대 위치 기준으로 절대 위치 지정 */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1; /* 배경 이미지를 멤버보다 뒤로 보냄 */
 }
 
 .house-name {
+  position: relative; /* 상위 요소를 기준으로 위치 지정 */
+  z-index: 2; /* 텍스트와 이미지가 오버레이 위에 오도록 z-index 높이기 */
+  position: relative; /* 상위 요소를 기준으로 위치 지정 */
+  z-index: 1; /* 텍스트와 이미지가 오버레이 위에 오도록 z-index 높이기 */
   font-weight: bold;
-  border: 2px solid black;
+  border: 2px solid whitesmoke;
+  color: white;
+  font-weight: bold;
   text-align: center;
   border-radius: 10px;
   padding: 2px;
   margin: 2px;
+}
+
+.house img {
+  position: relative; /* 상위 요소를 기준으로 위치 지정 */
+  z-index: 1; /* 텍스트와 이미지가 오버레이 위에 오도록 z-index 높이기 */
+}
+.houseListBtn {
+  background-image: url("https://i.namu.wiki/i/Lzm1Trx9RF623l4lXZNIzgSS9g21k-4FpRwNVcPA9hDbR1E2ICPk9dJQbIM8HjHYLPh-A5iWPkH3pKMdAPOP0A.webp");
+  background-position: center;
+  background-size: cover;
+  width: 80px;
+  height: 80px;
+  margin: 20px auto;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.member {
+  margin: 5px 0;
+  position: relative;
+  color: white; /* 배경에 따라 이 색상을 조정할 필요가 있을 수 있습니다 */
+  z-index: 2; /* 멤버를 house 및 배경 레이어보다 앞으로 설정 */
+}
+
+.member img {
+  border-radius: 50%; /* 원형 이미지 */
+  object-fit: cover; /* 이미지 비율 유지 */
+  border: 1px solid white;
 }

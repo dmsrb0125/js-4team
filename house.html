@@ -13,9 +13,62 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/house.css" />
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        updateDoc,
+        addDoc,
+        collection,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+        authDomain: "js-4teamproject.firebaseapp.com",
+        projectId: "js-4teamproject",
+        storageBucket: "js-4teamproject.appspot.com",
+        messagingSenderId: "514915830726",
+        appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+        measurementId: "G-ZGBX3PPB98",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      async function loadHouseData() {
+        const params = new URLSearchParams(window.location.search);
+        const houseId = params.get("houseId");
+        const houseRef = doc(db, "houses", houseId);
+        const docSnap = await getDoc(houseRef);
+
+        if (docSnap.exists()) {
+          const houseData = docSnap.data();
+          document.title = houseData.name;
+          document.body.style.backgroundImage = `url(${houseData.image})`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.backgroundPosition = "center";
+          document.getElementById("houseDescription").textContent =
+            houseData.description;
+        } else {
+          console.log("No such document!");
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", loadHouseData);
+    </script>
   </head>
   <body>
-    <div class="nav"></div>
-    <div class="main"></div>
+    <div class="nav">
+      <h1>불4조 기사단</h1>
+    </div>
+    <div class="main">
+      <h1>기숙사 소개</h1>
+    </div>
+    <div class="members">
+      <h1>기숙사 소속 멤버 목록</h1>
+    </div>
   </body>
 </html>
