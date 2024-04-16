@@ -14,56 +14,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/nav.css"/>
     <link rel="stylesheet" href="css/house.css"/>
+    <link rel="stylesheet" href="css/houseMemberPopup.css"/>
+
+    <script src="js/module/firebase-conn.js" type="module"></script>
+    <script src="js/house/popup/houseMemberPopup.js" type="module"></script>
+
     <script type="module">
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            updateDoc,
-            addDoc,
-            collection,
-        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import {btnColorCheck} from "./js/house/popup/houseMemberTitleColor.js";
+        import {elementColorSet} from "./js/house/popup/houseMemberBtnAndPopupColor.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
-            authDomain: "js-4teamproject.firebaseapp.com",
-            projectId: "js-4teamproject",
-            storageBucket: "js-4teamproject.appspot.com",
-            messagingSenderId: "514915830726",
-            appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
-            measurementId: "G-ZGBX3PPB98",
-        };
+        elementColorSet(btnColorCheck());
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        async function loadHouseData() {
-            const params = new URLSearchParams(window.location.search);
-            const houseId = params.get("houseId");
-            const houseRef = doc(db, "houses", houseId);
-            const docSnap = await getDoc(houseRef);
-
-            if (docSnap.exists()) {
-                const houseData = docSnap.data();
-                document.title = houseData.name;
-                document.body.style.backgroundImage = `url(${houseData.image})`;
-                document.body.style.backgroundSize = "cover";
-                document.body.style.backgroundPosition = "center";
-                document.getElementById("houseDescription").textContent =
-                    houseData.description;
-            } else {
-                console.log("No such document!");
-            }
-        }
-
-        window.addEventListener("DOMContentLoaded", loadHouseData);
+        window.addEventListener("DOMContentLoaded", btnColorCheck);
     </script>
 </head>
 <body>
 <nav>
     <ul class="nav-container">
-        <li class="nav-item"><img src="img/gryffindor.jpg" class="header-img"></img></li>
+        <li class="nav-item"><img src="img/gryffindor.jpg" class="header-img"></li>
     </ul>
 </nav>
 <div class="house-content">
@@ -76,12 +44,67 @@
     <div class="members">
         <div class="profile">
             <div class="profile-image"></div>
-          <div class="profile-detail">
-        <div class="profile-content">호그와트의 반장은 기숙사 사감, 교장에 의해 특별한 권한과 책임이 주어지는 학생이다. 5학년 학생 중 여학생 한명, 남학생 한 명을 뽑고 이들은 학교를 마칠 때까지 반장 활동을 계속한다. 반장 선출 시 우수한 학업 성과, 뛰어난 명성, 정직함, 바른 행실, 성실함이 등이 조건으로 고련된다.</div>
-          <div class="profile-more"><a href="">더 보기..</a></div>
-          </div>
+            <div class="profile-detail">
+                <div class="profile-content">호그와트의 반장은 기숙사 사감, 교장에 의해 특별한 권한과 책임이 주어지는 학생이다. 5학년 학생 중 여학생 한명, 남학생 한 명을
+                    뽑고 이들은 학교를 마칠 때까지 반장 활동을 계속한다. 반장 선출 시 우수한 학업 성과, 뛰어난 명성, 정직함, 바른 행실, 성실함이 등이 조건으로 고련된다.
+                </div>
+                <div class="profile-more"><a href="">더 보기..</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="memberAddPopup">
+        <div class="modal-btn-box">
+            <button type="button" id="modal-open">모달창 열기</button>
+        </div>
+        <div class="popup-wrap" id="popup">
+            <div id="popupId" class="popup">
+                <div class="popup-head">
+                    <span class="head-title">인원 추가</span>
+                </div>
+                <div class="popup-body">
+                    <div class="body-content">
+                        <div class="body-titlebox">
+                            <h1>인원을 추가해주세요.</h1>
+                        </div>
+                        <div class="body-contentbox">
+                            <form id="myForm">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" name="name"><br>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email">
+                                <label for="name">Name:</label>
+                                <input type="text" id="mbti" name="name"><br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-foot">
+                    <span class="pop-btn close" id="close">취소</span>
+                    <span class="pop-btn confirm" id="confirm">추가하기</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<!--TODO-->
+<script>
+    // confirm 버튼 클릭 시 submitForm() 함수 호출
+    document.getElementById("confirm").addEventListener("click", submitForm);
+
+    function submitForm() {
+        // Form 요소에 접근하여 사용자 입력 가져오기
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var mbti = document.getElementById("mbti").value;
+
+        // 가져온 데이터를 가공하거나 다른 처리를 수행할 수 있음
+        // 여기서는 단순히 콘솔에 로그로 출력
+        console.log("Name: " + name);
+        console.log("Email: " + email);
+        console.log("MBTI: " + mbti);
+
+        alert("저장되었습니다.");
+    }
+</script>
 </body>
 </html>
