@@ -1,0 +1,31 @@
+.houseList {
+  height: 350px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.house {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer; /* 마우스 포인터를 손가락 모양으로 변경 */
+  border: 1px solid #ccc; /* 경계선 스타일 */
+  padding: 10px;
+  margin: 10px;
+  transition: background-color 0.3s; /* 호버 효과 */
+}
+
+.house:hover {
+  background-color: #f0f0f0; /* 마우스 호버 시 배경색 변경 */
+}
+
+.house-name {
+  font-weight: bold;
+  border: 2px solid black;
+  text-align: center;
+  border-radius: 10px;
+  padding: 2px;
+  margin: 2px;
+}

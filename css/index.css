@@ -1,17 +1,14 @@
-html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
+  min-height: 100vh;
+  overflow-y: auto; /* 필요한 경우 스크롤 허용 */
   display: flex;
   flex-direction: column;
   width: 100%;
   position: relative;
-  background-image: url("/Users/ieungyu/Desktop/Programing/js-4team/img/111.jpeg");
+  position: relative;
+  background-image: url("/Users/ieungyu/Desktop/Programing/js-4team/img/3401ffac29dd7d345eaa4b5891f50206.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -23,11 +20,16 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.5
-  ); /* 투명 흰 배경 설정, 배경 이미지 대신 */
+  background: rgba(255, 255, 255, 0.5); /* 투명 흰 배경 설정 */
   opacity: 0.5; /* 투명도 조정 */
+  z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 600px;
 }
