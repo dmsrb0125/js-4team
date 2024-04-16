@@ -8,7 +8,7 @@ body {
   width: 100%;
   position: relative;
   position: relative;
-  background-image: url("img/3401ffac29dd7d345eaa4b5891f50206.jpg");
+  background-image: url("../img/main.jpg");
   background-position: center;
   background-size: cover;
 }
@@ -31,5 +31,5 @@ body::before {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 2000px;
+  height: 500px;
 }
