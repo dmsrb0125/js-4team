@@ -18,7 +18,6 @@
 
     <script src="js/module/firebase-conn.js" type="module"></script>
     <script src="js/house/popup/houseMemberPopup.js" type="module"></script>
-
     <script type="module">
         import {btnColorCheck} from "./js/house/popup/houseMemberTitleColor.js";
         import {elementColorSet} from "./js/house/popup/houseMemberBtnAndPopupColor.js";
@@ -68,12 +67,20 @@
                         </div>
                         <div class="body-contentbox">
                             <form id="myForm">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" name="name"><br>
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email">
-                                <label for="name">Name:</label>
-                                <input type="text" id="mbti" name="name"><br>
+                                <label for="memberName">Name :</label>
+                                <input type="text" id="memberName" name="name"><br>
+                                <label for="memberImage">Image :</label>
+                                <input type="email" id="memberImage" name="email"><br>
+                                <label for="memberAdvantages">Advantages : </label>
+                                <input type="text" id="memberAdvantages" name="name"><br>
+                                <label for="memberStyle">Style :</label>
+                                <input type="text" id="memberStyle" name="name"><br>
+                                <label for="memberBlogUrl">BlogUrl : </label>
+                                <input type="text" id="memberBlogUrl" name="name"><br>
+                                <label for="memberMBTI">MBTI :</label>
+                                <input type="text" id="memberMBTI" name="name"><br>
+                                <label for="memberIntroduction">Introduction :</label>
+                                <input type="text" id="memberIntroduction" name="name"><br>
                             </form>
                         </div>
                     </div>
@@ -86,25 +93,6 @@
         </div>
     </div>
 </div>
-<!--TODO-->
-<script>
-    // confirm 버튼 클릭 시 submitForm() 함수 호출
-    document.getElementById("confirm").addEventListener("click", submitForm);
-
-    function submitForm() {
-        // Form 요소에 접근하여 사용자 입력 가져오기
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        var mbti = document.getElementById("mbti").value;
-
-        // 가져온 데이터를 가공하거나 다른 처리를 수행할 수 있음
-        // 여기서는 단순히 콘솔에 로그로 출력
-        console.log("Name: " + name);
-        console.log("Email: " + email);
-        console.log("MBTI: " + mbti);
-
-        alert("저장되었습니다.");
-    }
-</script>
+<script src="js/house/save-member/save-member.js"></script>
 </body>
 </html>
