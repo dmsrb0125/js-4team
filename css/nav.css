@@ -19,6 +19,7 @@
   position: fixed;
   border-color: black;
   z-index: 2;
+  margin-bottom: 10px;
 }
 
 .Dday {

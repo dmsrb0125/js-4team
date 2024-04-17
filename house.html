@@ -128,45 +128,43 @@
             }
           });
 
-        function openModal(memberId) {
-          const docRef = doc(db, "houses", houseId, "members", memberId);
-          getDoc(docRef)
-            .then((docSnapshot) => {
-              if (docSnapshot.exists()) {
-                const memberData = docSnapshot.data();
-                // 기존 데이터 바인딩
-                document.getElementById("modalName").textContent =
-                  memberData.name;
-                document.getElementById("modalImage").src = memberData.image;
-                document.getElementById("modalSummary").textContent =
-                  memberData.summary;
+          function openModal(memberId) {
+  const docRef = doc(db, "houses", houseId, "members", memberId);
+  getDoc(docRef)
+    .then((docSnapshot) => {
+      if (docSnapshot.exists()) {
+        const memberData = docSnapshot.data();
+        console.log(memberId)
+        // 기존 데이터 바인딩
+        document.querySelector("#memberId").textContent =  memberData.memberId;
+        document.querySelector(".modalName").textContent = memberData.name;
+        document.querySelector(".modalImage").src = memberData.image;
+        document.querySelector(".modalSummary").textContent = memberData.summary;
 
-                // 추가 정보 바인딩
-                document.getElementById("modalStyle").textContent =
-                  memberData.style || "스타일 정보 없음";
-                document.getElementById("modalMBTI").textContent =
-                  memberData.mbti || "MBTI 정보 없음";
-                document.getElementById("modalAdvantages").textContent =
-                  memberData.advantages || "장점 정보 없음";
-                const blogLink = document.getElementById("modalBlogUrl");
-                if (memberData.blogUrl) {
-                  blogLink.href = memberData.blogUrl;
-                  blogLink.textContent = "블로그 방문하기";
-                  blogLink.style.display = "inline"; // 블로그 링크가 있는 경우에만 표시
-                } else {
-                  blogLink.style.display = "none"; // 블로그 링크가 없는 경우 숨김
-                }
-
-                // 모달 표시
-                document.querySelector(".modal").style.display = "block";
-              } else {
-                console.log("No such member!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching member data:", error);
-            });
+        // 추가 정보 바인딩
+        document.querySelector(".modalStyle").textContent = memberData.style || "스타일 정보 없음";
+        document.querySelector(".modalMBTI").textContent = memberData.mbti || "MBTI 정보 없음";
+        document.querySelector(".modalAdvantages").textContent = memberData.advantages || "장점 정보 없음";
+        
+        const blogLink = document.querySelector(".modalBlogUrl");
+        if (memberData.blogUrl) {
+          blogLink.href = memberData.blogUrl;
+          blogLink.textContent = "블로그 방문하기";
+          blogLink.style.display = "inline"; // 블로그 링크가 있는 경우에만 표시
+        } else {
+          blogLink.style.display = "none"; // 블로그 링크가 없는 경우 숨김
         }
+
+        // 모달 표시
+        document.querySelector(".memberModal").style.display = "block";
+      } else {
+        console.log("No such member!");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching member data:", error);
+    });
+}
 
         const closeModal = document.querySelector(".close");
         closeModal.onclick = function () {
@@ -207,24 +205,26 @@
       </div>
       <div class="members"></div>
     </div>
-    <div class="modal" id="memberModal" style="display: none">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <img
-          id="modalImage"
-          src=""
-          alt="Member Image"
-          style="width: 100px; height: 100px"
-        />
-        <h4 id="modalName"></h4>
-        <p id="modalSummary"></p>
-        <p id="modalIntroduction"></p>
-        <p id="modalAdvantages"></p>
-        <p id="modalMBTI"></p>
-        <p id="modalStyle"></p>
-        <a id="modalBlogUrl" href="">Visit Blog</a>
-      </div>
+    <div class="modal memberModal" style="display: none">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img
+                class="modalImage"
+                src=""
+                alt="Member Image"
+                style="width: 100px; height: 100px"
+            />
+            <p display="none" id="memberId" >
+            <h4 class="modalName"></h4>
+            <p class="modalSummary"></p>
+            <p class="modalIntroduction"></p>
+            <p class="modalAdvantages"></p>
+            <p class="modalMBTI"></p>
+            <p class="modalStyle"></p>
+            <a class="modalBlogUrl" href="">Visit Blog</a>
+        </div>
     </div>
+    
 
 </div>
 <div class="memberAddPopup">
