@@ -1,55 +1,163 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>불4조 기사단</title>
     <!-- Bootstrap -->
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
     />
+
     <!-- Style -->
-    <link rel="stylesheet" href="css/index.css"/>
-    <link rel="stylesheet" href="css/nav.css"/>
-    <link rel="stylesheet" href="css/houseList.css"/>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/houseList.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
-        * {
-            font-family: "Nanum Pen Script", cursive;
-            font-weight: 400;
-            font-style: normal;
-        }
+      * {
+        font-family: "Nanum Pen Script", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
     </style>
-    <link rel="stylesheet" href="css/index.css"/>
-    <link rel="stylesheet" href="css/nav.css"/>
-    <link rel="stylesheet" href="css/houseList.css"/>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/houseList.css" />
 
     <!-- main script -->
     <script type="module">
-        import {loadHousesAndMembers} from "./js/main.js";
+      import { loadHousesAndMembers } from "./js/main.js";
+      
 
-        window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+      window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+      
     </script>
-</head>
-<body>
-<div class="nav">
-    <h1>불4조 기사단</h1>
-</div>
-<hr class="featurette-divider"/>
-<div class="main"></div>
-<hr class="featurette-divider"/>
-<button class="houseListBtn"></button>
-<div class="houseList"></div>
+  </head>
+  <body>
+    <div class="nav">
+        <span class="Dday">
+            부트캠프 종료까지
+            <span id="DdayCounter" class="Counter"></span><span>일</span></span>
+        </span>
+        <div>
+            <a href="index.html" class="btn-bul">불4조 기사단</a>
+        </div>
+        <div id="weather"><span></span><span></span></div>
+    </div>
+    <hr class="featurette-divider" />
+    <div id="carouselExampleCaptions" class="carousel slide">
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQglYB9bqZo5weybMoU7zj0EZrKBt0hc_nzeRYJl6dx4MXv-dYvGvpcCegnW3ViV1uyRNs&usqp=CAU"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h1>우리팀은?</h1>
+            <p>
+              다양한 배경의 사람들이 같은 목표를 가지고 모였습니다 그 목표를
+              향한 뜨거운 마음은 누구도 방해할 수 없습니다 혹여 폭우를 만나
+              사그라들더라도 열정으로 다시 일어납니다 열정이 사그라들 것 같은
+              동료를 보듬어 줄줄 압니다 그렇게 받은 따뜻한 마음에 감사할
+              줄압니다
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAIEV2UihL3Z6hxMDSCMe716IcS37abLp_mtysRt6uYeh4nqb3owwpr_sgPVhH-mWM0pg&usqp=CAU"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h1>우리팀의 약속</h1>
+            <div>
+              <p>1.서로 말 이쁘게하기</p>
+              <p>2.어렵다고 포기하지 않기</p>
+              <p>3.시간 약속 잘지키기</p>
+              <p>4.카메라 켜놓기</p>
+              <p>5.강의 열심히 듣기</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img
+            src="https://img.freepik.com/premium-photo/old-parchment-paper-texture-background-vintage-wallpaper_765582-567.jpg"
+            class="d-block w-100"
+            alt="..."
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h1>불4조 기사단의 궁극적인 목표</h1>
+            <p>
+              불4조 기사단의 궁극적인 목표 누구에게도 지지 않는 따뜻한 마음의
+              소유자들, 이제는 그 따뜻한 마음을 넘어서는 실력을 쌓을 것입니다
+              그리고 네카라쿠배를 목표로 합니다 하지만 더 높이 비상할지도 모르는
+              일이죠
+            </p>
+          </div>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <hr class="featurette-divider" />
+    <button class="houseListBtn"></button>
+    <div class="houseList"></div>
+  </body>
 
-</body>
 
-<!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
-<script src="js/houseListBtn.js"></script>
+  <script src="js/dday.js"></script>
+  <script src="js/scroll.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/houseListBtn.js"></script>
 </html>
