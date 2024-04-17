@@ -2,7 +2,9 @@ import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-
 import {
     getFirestore,
     collection,
-    addDoc
+    addDoc,
+    doc,
+    getDoc
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -93,6 +95,11 @@ document.getElementById("confirm").addEventListener("click", function () {
 
     alert("저장되었습니다.");
     modalClose();
+
+    // 화면 새로고침
+    setTimeout(function() {
+        location.reload();
+    }, 500);
 });
 
 function modalClose() {
