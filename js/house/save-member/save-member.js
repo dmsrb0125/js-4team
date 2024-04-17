@@ -1,4 +1,21 @@
-// import {db, collection} from '../../module/firebase-conn';
+import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    addDoc
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+    authDomain: "js-4teamproject.firebaseapp.com",
+    projectId: "js-4teamproject",
+    storageBucket: "js-4teamproject.appspot.com",
+    messagingSenderId: "514915830726",
+    appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+    measurementId: "G-ZGBX3PPB98",
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 class Member {
     constructor(name, image, advantages, style, blogUrl, mbti, introduction) {
@@ -12,14 +29,28 @@ class Member {
     }
 }
 
-// Member 객체를 Firebase에 저장하는 함수
-async function saveMemberToFirebase(member) {
+let houseIdPK = null;
+
+function getByHouseId(houseId) {
+    houseIdPK = Object.keys(houseId).toString();
+}
+
+//member를 저장할 수 있는 firebase 기능
+async function addMemberToFirestore(houseId, member) {
     try {
-        const membersCollectionRef = collection(db, 'members'); // 'members' 컬렉션 참조
-        await addDoc(membersCollectionRef, member); // member 객체를 'members' 컬렉션에 추가
-        console.log('Member가 Firebase에 저장되었습니다.');
+        const membersCollection = collection(db, `houses/${houseId}/members`);
+        await addDoc(membersCollection, {
+            name: member.name,
+            image: member.image,
+            advantages: member.advantages,
+            style: member.style,
+            blogUrl: member.blogUrl,
+            mbti: member.mbti,
+            introduction: member.introduction
+        });
+        console.log('Member added to Firestore successfully');
     } catch (error) {
-        console.error('Firebase에 Member를 저장하는 동안 오류가 발생했습니다:', error);
+        console.error('Error adding member to Firestore: ', error);
     }
 }
 
@@ -49,7 +80,8 @@ document.getElementById("confirm").addEventListener("click", function () {
     let member = new Member(name, image, advantages, style, blogUrl, mbti, introduction);
 
     // Member 객체를 Firebase에 저장
-    saveMemberToFirebase(member);
+    addMemberToFirestore(houseIdPK, member);
+
     // 저장 후 입력란 초기화
     setInputValue("memberName", "");
     setInputValue("memberImage", "");
@@ -66,3 +98,5 @@ document.getElementById("confirm").addEventListener("click", function () {
 function modalClose() {
     $("#popup").fadeOut();
 }
+
+export {getByHouseId}

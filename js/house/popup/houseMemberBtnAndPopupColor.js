@@ -1,16 +1,17 @@
 function elementColorSet(mainColor) {
+
     let memberAddBtnEle = document.getElementById('modal-open');
 
-    memberAddBtnEle.style.backgroundColor = mainColor[0];
-    memberAddBtnEle.style.color = mainColor[1];
+    memberAddBtnEle.style.backgroundColor = Object.values(mainColor)[0][0].toString();
+    memberAddBtnEle.style.color = Object.values(mainColor)[0][1].toString();
 
     let popupEle = document.getElementById('popupId');
-    popupEle.style.backgroundColor = mainColor[0];
+    popupEle.style.backgroundColor = Object.values(mainColor)[0][0].toString();
 
     let popupTextEle = document.getElementsByClassName('pop-btn');
 
     for (let popupTextEleElement of popupTextEle) {
-        popupTextEleElement.style.color = mainColor[1];
+        popupTextEleElement.style.color = Object.values(mainColor)[0][1].toString();
     }
 }
 

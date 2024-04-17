@@ -19,10 +19,12 @@
     <script src="js/module/firebase-conn.js" type="module"></script>
     <script src="js/house/popup/houseMemberPopup.js" type="module"></script>
     <script type="module">
-        import {btnColorCheck} from "./js/house/popup/houseMemberTitleColor.js";
+        import {btnColorCheck} from "./js/house/popup/houseMemberHouseInfo.js";
         import {elementColorSet} from "./js/house/popup/houseMemberBtnAndPopupColor.js";
+        import {getByHouseId} from './js/house/save-member/save-member.js'
 
         elementColorSet(btnColorCheck());
+        getByHouseId(btnColorCheck());
 
         window.addEventListener("DOMContentLoaded", btnColorCheck);
     </script>
@@ -93,6 +95,5 @@
         </div>
     </div>
 </div>
-<script src="js/house/save-member/save-member.js"></script>
 </body>
 </html>

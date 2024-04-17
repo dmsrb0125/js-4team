@@ -1,5 +1,12 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    doc,
+    getDoc,
+    addDoc
+} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
@@ -13,4 +20,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export { db, collection, getDocs, doc, getDoc };
+export {db, collection, getDocs, doc, getDoc, addDoc};
