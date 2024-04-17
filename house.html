@@ -22,6 +22,7 @@
       }
     </style>
     <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/memberModal.css" />
     <link rel="stylesheet" href="css/house.css" />
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -48,9 +49,11 @@
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app);
 
+      let houseId = null; // 전역 변수로 houseId 선언
+
       async function loadHouseData() {
         const params = new URLSearchParams(window.location.search);
-        const houseId = params.get("houseId");
+        houseId = params.get("houseId"); // 전역 변수에 값 할당
         const houseRef = doc(db, "houses", houseId);
         const docSnap = await getDoc(houseRef);
 
@@ -63,15 +66,15 @@
           document.getElementById("introduction").textContent =
             houseData.introduction;
           document.getElementById("houseName").textContent = houseData.name;
-          document.getElementById("houseLogo").src = houseData.logo; // 로고 이미지 소스 설정
+          document.getElementById("houseLogo").src = houseData.logo;
           loadMembers(houseId);
         } else {
           console.log("No such document!");
         }
       }
-      async function loadMembers(houseId) {
-        const membersContainer = document.querySelector(".members");
 
+      async function loadMembers() {
+        const membersContainer = document.querySelector(".members");
         const querySnapshot = await getDocs(
           collection(db, "houses", houseId, "members")
         );
@@ -79,22 +82,86 @@
           const memberData = doc.data();
           const memberDiv = document.createElement("div");
           memberDiv.className = "member";
+          memberDiv.dataset.memberid = doc.id;
           memberDiv.innerHTML = `
-      <div class="profile">
-        <div class="profile-left">
-          <img src="${memberData.image}" ">
-          <h3>${memberData.name}<h3>
-        </div>
-        <div class="profile-summary">
-          ${memberData.summary}
-        </div>
-      </div>
-    `;
+              <div class="profile">
+                <div class="profile-left">
+                  <img src="${memberData.image}" alt="${memberData.name}">
+                  <h3>${memberData.name}</h3>
+                </div>
+                <div class="profile-summary">
+                  ${memberData.summary}
+                </div>
+              </div>
+            `;
           membersContainer.appendChild(memberDiv);
         });
       }
 
-      window.addEventListener("DOMContentLoaded", loadHouseData);
+      document.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener("DOMContentLoaded", loadHouseData);
+
+        document
+          .querySelector(".members")
+          .addEventListener("click", function (event) {
+            let target = event.target.closest(".member");
+            if (target) {
+              const memberId = target.dataset.memberid;
+              openModal(memberId);
+            }
+          });
+
+        function openModal(memberId) {
+          const docRef = doc(db, "houses", houseId, "members", memberId);
+          getDoc(docRef)
+            .then((docSnapshot) => {
+              if (docSnapshot.exists()) {
+                const memberData = docSnapshot.data();
+                // 기존 데이터 바인딩
+                document.getElementById("modalName").textContent =
+                  memberData.name;
+                document.getElementById("modalImage").src = memberData.image;
+                document.getElementById("modalSummary").textContent =
+                  memberData.summary;
+
+                // 추가 정보 바인딩
+                document.getElementById("modalStyle").textContent =
+                  memberData.style || "스타일 정보 없음";
+                document.getElementById("modalMBTI").textContent =
+                  memberData.mbti || "MBTI 정보 없음";
+                document.getElementById("modalAdvantages").textContent =
+                  memberData.advantages || "장점 정보 없음";
+                const blogLink = document.getElementById("modalBlogUrl");
+                if (memberData.blogUrl) {
+                  blogLink.href = memberData.blogUrl;
+                  blogLink.textContent = "블로그 방문하기";
+                  blogLink.style.display = "inline"; // 블로그 링크가 있는 경우에만 표시
+                } else {
+                  blogLink.style.display = "none"; // 블로그 링크가 없는 경우 숨김
+                }
+
+                // 모달 표시
+                document.querySelector(".modal").style.display = "block";
+              } else {
+                console.log("No such member!");
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching member data:", error);
+            });
+        }
+
+        const closeModal = document.querySelector(".close");
+        closeModal.onclick = function () {
+          document.querySelector(".modal").style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target === document.querySelector(".modal")) {
+            document.querySelector(".modal").style.display = "none";
+          }
+        };
+      });
     </script>
   </head>
   <body>
@@ -115,6 +182,24 @@
         <div id="introduction"></div>
       </div>
       <div class="members"></div>
+    </div>
+    <div class="modal" id="memberModal" style="display: none">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <img
+          id="modalImage"
+          src=""
+          alt="Member Image"
+          style="width: 100px; height: 100px"
+        />
+        <h4 id="modalName"></h4>
+        <p id="modalSummary"></p>
+        <p id="modalIntroduction"></p>
+        <p id="modalAdvantages"></p>
+        <p id="modalMBTI"></p>
+        <p id="modalStyle"></p>
+        <a id="modalBlogUrl" href="">Visit Blog</a>
+      </div>
     </div>
   </body>
 </html>
