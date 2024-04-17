@@ -12,6 +12,86 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/nav.css"/>
+    <link rel="stylesheet" href="css/house.css"/>
+    <link rel="stylesheet" href="css/houseMemberPopup.css"/>
+
+    <script src="js/module/firebase-conn.js" type="module"></script>
+    <script src="js/house/popup/houseMemberPopup.js" type="module"></script>
+    <script type="module">
+        import {btnColorCheck} from "./js/house/popup/houseMemberHouseInfo.js";
+        import {elementColorSet} from "./js/house/popup/houseMemberBtnAndPopupColor.js";
+        import {getByHouseId} from './js/house/save-member/save-member.js'
+
+        elementColorSet(btnColorCheck());
+        getByHouseId(btnColorCheck());
+
+        window.addEventListener("DOMContentLoaded", btnColorCheck);
+    </script>
+</head>
+<body>
+<nav>
+    <ul class="nav-container">
+        <li class="nav-item"><img src="img/gryffindor.jpg" class="header-img"></li>
+    </ul>
+</nav>
+<div class="house-content">
+    <div class="main">
+        <h3>그리핀도르</h3>
+        <p>"그 이름에 걸맞은 용기를 보여준느 아이들은 누구나 다 가르치도록 하세."</p>
+        <p>해리 포터 시리즈에 등장하는 마법학교 호그와트의 4대 기숙사 중 하나이다. 주인공 3인방의 기숙사로 스토리의 중심이 된다.
+            마법사 세계의 훌륭한 마법사를 다수 배출했으며, 특히 오러를 가장 많이 배출한 기숙사다. 하지만 무엇보다 그리핀도르의 자랑이 되는 마법사는 당연히 알버스 덤블도어.</p>
+    </div>
+    <div class="members">
+        <div class="profile">
+            <div class="profile-image"></div>
+            <div class="profile-detail">
+                <div class="profile-content">호그와트의 반장은 기숙사 사감, 교장에 의해 특별한 권한과 책임이 주어지는 학생이다. 5학년 학생 중 여학생 한명, 남학생 한 명을
+                    뽑고 이들은 학교를 마칠 때까지 반장 활동을 계속한다. 반장 선출 시 우수한 학업 성과, 뛰어난 명성, 정직함, 바른 행실, 성실함이 등이 조건으로 고련된다.
+                </div>
+                <div class="profile-more"><a href="">더 보기..</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="memberAddPopup">
+        <div class="modal-btn-box">
+            <button type="button" id="modal-open">모달창 열기</button>
+        </div>
+        <div class="popup-wrap" id="popup">
+            <div id="popupId" class="popup">
+                <div class="popup-head">
+                    <span class="head-title">인원 추가</span>
+                </div>
+                <div class="popup-body">
+                    <div class="body-content">
+                        <div class="body-titlebox">
+                            <h1>인원을 추가해주세요.</h1>
+                        </div>
+                        <div class="body-contentbox">
+                            <form id="myForm">
+                                <label for="memberName">Name :</label>
+                                <input type="text" id="memberName" name="name"><br>
+                                <label for="memberImage">Image :</label>
+                                <input type="email" id="memberImage" name="email"><br>
+                                <label for="memberAdvantages">Advantages : </label>
+                                <input type="text" id="memberAdvantages" name="name"><br>
+                                <label for="memberStyle">Style :</label>
+                                <input type="text" id="memberStyle" name="name"><br>
+                                <label for="memberBlogUrl">BlogUrl : </label>
+                                <input type="text" id="memberBlogUrl" name="name"><br>
+                                <label for="memberMBTI">MBTI :</label>
+                                <input type="text" id="memberMBTI" name="name"><br>
+                                <label for="memberIntroduction">Introduction :</label>
+                                <input type="text" id="memberIntroduction" name="name"><br>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="popup-foot">
+                    <span class="pop-btn close" id="close">취소</span>
+                    <span class="pop-btn confirm" id="confirm">추가하기</span>
+                </div>
+            </div>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
@@ -201,5 +281,8 @@
         <a id="modalBlogUrl" href="">Visit Blog</a>
       </div>
     </div>
+</div>
+</body>
+</html>
   </body>
 </html>
