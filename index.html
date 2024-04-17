@@ -12,7 +12,15 @@
       crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
+      * {
+        font-family: "Nanum Pen Script", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/nav.css" />
     <link rel="stylesheet" href="css/houseList.css" />
@@ -83,13 +91,6 @@
       }
 
       window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
-      $(".houseListBtn").click(function () {
-        if ($(".houseList").css("display") === "none") {
-          $(".houseList").css("display", "flex");
-        } else {
-          $(".houseList").css("display", "none");
-        }
-      });
     </script>
   </head>
 
@@ -103,5 +104,6 @@
     <button class="houseListBtn"></button>
     <div class="houseList"></div>
     <!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
+    <script src="js/houseListBtn.js"></script>
   </body>
 </html>

@@ -1,87 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>불4조 기사단</title>
     <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-            crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/nav.css"/>
-    <link rel="stylesheet" href="css/house.css"/>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+      * {
+        font-family: "Nanum Pen Script", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/house.css" />
     <script type="module">
-        import {initializeApp} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-        import {
-            getFirestore,
-            doc,
-            getDoc,
-            updateDoc,
-            addDoc,
-            collection,
-        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        getDoc,
+        updateDoc,
+        addDoc,
+        collection,
+        getDocs,
+      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
-            authDomain: "js-4teamproject.firebaseapp.com",
-            projectId: "js-4teamproject",
-            storageBucket: "js-4teamproject.appspot.com",
-            messagingSenderId: "514915830726",
-            appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
-            measurementId: "G-ZGBX3PPB98",
-        };
+      const firebaseConfig = {
+        apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+        authDomain: "js-4teamproject.firebaseapp.com",
+        projectId: "js-4teamproject",
+        storageBucket: "js-4teamproject.appspot.com",
+        messagingSenderId: "514915830726",
+        appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+        measurementId: "G-ZGBX3PPB98",
+      };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
 
-        async function loadHouseData() {
-            const params = new URLSearchParams(window.location.search);
-            const houseId = params.get("houseId");
-            const houseRef = doc(db, "houses", houseId);
-            const docSnap = await getDoc(houseRef);
+      async function loadHouseData() {
+        const params = new URLSearchParams(window.location.search);
+        const houseId = params.get("houseId");
+        const houseRef = doc(db, "houses", houseId);
+        const docSnap = await getDoc(houseRef);
 
-            if (docSnap.exists()) {
-                const houseData = docSnap.data();
-                document.title = houseData.name;
-                document.body.style.backgroundImage = `url(${houseData.image})`;
-                document.body.style.backgroundSize = "cover";
-                document.body.style.backgroundPosition = "center";
-                document.getElementById("houseDescription").textContent =
-                    houseData.description;
-            } else {
-                console.log("No such document!");
-            }
+        if (docSnap.exists()) {
+          const houseData = docSnap.data();
+          document.title = houseData.name;
+          document.body.style.backgroundImage = `url(${houseData.image})`;
+          document.body.style.backgroundSize = "cover";
+          document.body.style.backgroundPosition = "center";
+          document.getElementById("introduction").textContent =
+            houseData.introduction;
+          document.getElementById("houseName").textContent = houseData.name;
+          document.getElementById("houseLogo").src = houseData.logo; // 로고 이미지 소스 설정
+          loadMembers(houseId);
+        } else {
+          console.log("No such document!");
         }
+      }
+      async function loadMembers(houseId) {
+        const membersContainer = document.querySelector(".members");
 
-        window.addEventListener("DOMContentLoaded", loadHouseData);
-    </script>
-</head>
-<body>
-<nav>
-    <ul class="nav-container">
-        <li class="nav-item"><img src="img/gryffindor.jpg" class="header-img"></img></li>
-    </ul>
-</nav>
-<div class="house-content">
-    <div class="main">
-        <h3>그리핀도르</h3>
-        <p>"그 이름에 걸맞은 용기를 보여준느 아이들은 누구나 다 가르치도록 하세."</p>
-        <p>해리 포터 시리즈에 등장하는 마법학교 호그와트의 4대 기숙사 중 하나이다. 주인공 3인방의 기숙사로 스토리의 중심이 된다.
-            마법사 세계의 훌륭한 마법사를 다수 배출했으며, 특히 오러를 가장 많이 배출한 기숙사다. 하지만 무엇보다 그리핀도르의 자랑이 되는 마법사는 당연히 알버스 덤블도어.</p>
-    </div>
-    <div class="members">
-        <div class="profile">
-            <div class="profile-image"></div>
-          <div class="profile-detail">
-        <div class="profile-content">호그와트의 반장은 기숙사 사감, 교장에 의해 특별한 권한과 책임이 주어지는 학생이다. 5학년 학생 중 여학생 한명, 남학생 한 명을 뽑고 이들은 학교를 마칠 때까지 반장 활동을 계속한다. 반장 선출 시 우수한 학업 성과, 뛰어난 명성, 정직함, 바른 행실, 성실함이 등이 조건으로 고련된다.</div>
-          <div class="profile-more"><a href="">더 보기..</a></div>
-          </div>
+        const querySnapshot = await getDocs(
+          collection(db, "houses", houseId, "members")
+        );
+        querySnapshot.forEach((doc) => {
+          const memberData = doc.data();
+          const memberDiv = document.createElement("div");
+          memberDiv.className = "member";
+          memberDiv.innerHTML = `
+      <div class="profile">
+        <div class="profile-left">
+          <img src="${memberData.image}" ">
+          <h3>${memberData.name}<h3>
         </div>
+        <div class="profile-summary">
+          ${memberData.summary}
+        </div>
+      </div>
+    `;
+          membersContainer.appendChild(memberDiv);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", loadHouseData);
+    </script>
+  </head>
+  <body>
+    <div class="nav">
+      <h1>불4조 기사단</h1>
     </div>
-</div>
-</body>
+    <div class="main">
+      <div class="house-content">
+        <div id="houseTitle">
+          <img
+            id="houseLogo"
+            src=""
+            alt="House Logo"
+            style="width: 100px; height: 100px"
+          />
+          <h3 id="houseName"></h3>
+        </div>
+        <div id="introduction"></div>
+      </div>
+      <div class="members"></div>
+    </div>
+    <script src="js/memberModal.js"></script>
+  </body>
 </html>
