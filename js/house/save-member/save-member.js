@@ -93,7 +93,6 @@ document.getElementById("confirm").addEventListener("click", function () {
 
     alert("저장되었습니다.");
     modalClose();
-    window.location.reload();
 });
 
 function modalClose() {
