@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>불4조 기사단</title>
-    <!-- Style -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
-
-      * {
-        font-family: "Nanum Pen Script", cursive;
-        font-weight: 400;
-        font-style: normal;
-      }
+        @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+        * {
+            font-family: "Nanum Pen Script", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
     </style>
     <link rel="stylesheet" href="css/nav.css" />
     <link rel="stylesheet" href="css/memberModal.css" />
-    <link rel="stylesheet" href="css/house.css" />
     <link rel="stylesheet" href="css/house.css" />
     <link rel="stylesheet" href="css/houseMemberPopup.css" />
     <!-- Script -->
@@ -34,198 +27,273 @@
       import { btnColorCheck } from "./js/house/popup/houseMemberHouseInfo.js";
       import { elementColorSet } from "./js/house/popup/houseMemberBtnAndPopupColor.js";
       import { getByHouseId } from "./js/house/save-member/save-member.js";
+     import { deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       elementColorSet(btnColorCheck());
       getByHouseId(btnColorCheck());
 
       window.addEventListener("DOMContentLoaded", btnColorCheck);
     </script>
-
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-      import {
-        getFirestore,
-        doc,
-        getDoc,
-        updateDoc,
-        addDoc,
-        collection,
-        getDocs,
-      } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc, collection, getDocs,deleteDoc  } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
-        authDomain: "js-4teamproject.firebaseapp.com",
-        projectId: "js-4teamproject",
-        storageBucket: "js-4teamproject.appspot.com",
-        messagingSenderId: "514915830726",
-        appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
-        measurementId: "G-ZGBX3PPB98",
-      };
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+            authDomain: "js-4teamproject.firebaseapp.com",
+            projectId: "js-4teamproject",
+            storageBucket: "js-4teamproject.appspot.com",
+            messagingSenderId: "514915830726",
+            appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+            measurementId: "G-ZGBX3PPB98"
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-      let houseId = null; // 전역 변수로 houseId 선언
+        let houseId = null; // 전역 변수로 houseId 선언
+        let currentMemberId = null; // 현재 수정 중인 멤버 ID 저장
 
-      async function loadHouseData() {
-        const params = new URLSearchParams(window.location.search);
-        houseId = params.get("houseId"); // 전역 변수에 값 할당
-        const houseRef = doc(db, "houses", houseId);
-        const docSnap = await getDoc(houseRef);
+        async function loadHouseData() {
+            const params = new URLSearchParams(window.location.search);
+            houseId = params.get("houseId");
+            const houseRef = doc(db, "houses", houseId);
+            const docSnap = await getDoc(houseRef);
 
-        if (docSnap.exists()) {
-          const houseData = docSnap.data();
-          document.title = houseData.name;
-          document.body.style.backgroundImage = `url(${houseData.image})`;
-          document.body.style.backgroundSize = "cover";
-          document.body.style.backgroundPosition = "center";
-          document.getElementById("introduction").textContent =
-            houseData.introduction;
-          document.getElementById("houseName").textContent = houseData.name;
-          document.getElementById("houseLogo").src = houseData.logo;
-          loadMembers(houseId);
-        } else {
-          console.log("No such document!");
-        }
-      }
-
-      async function loadMembers() {
-        const membersContainer = document.querySelector(".members");
-        const querySnapshot = await getDocs(
-          collection(db, "houses", houseId, "members")
-        );
-        querySnapshot.forEach((doc) => {
-          const memberData = doc.data();
-          const memberDiv = document.createElement("div");
-          memberDiv.className = "member";
-          memberDiv.dataset.memberid = doc.id;
-          memberDiv.innerHTML = `
-              <div class="profile">
-                <div class="profile-left">
-                  <img src="${memberData.image}" alt="${memberData.name}">
-                  <h3>${memberData.name}</h3>
-                </div>
-                <div class="profile-summary">
-                  ${memberData.summary}
-                </div>
-              </div>
-            `;
-          membersContainer.appendChild(memberDiv);
-        });
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        window.addEventListener("DOMContentLoaded", loadHouseData);
-
-        document
-          .querySelector(".members")
-          .addEventListener("click", function (event) {
-            let target = event.target.closest(".member");
-            if (target) {
-              const memberId = target.dataset.memberid;
-              openModal(memberId);
+            if (docSnap.exists()) {
+                const houseData = docSnap.data();
+                document.title = houseData.name;
+                document.body.style.backgroundImage = `url(${houseData.image})`;
+                document.body.style.backgroundSize = "cover";
+                document.body.style.backgroundPosition = "center";
+                document.getElementById("introduction").textContent = houseData.introduction;
+                document.getElementById("houseName").textContent = houseData.name;
+                document.getElementById("houseLogo").src = houseData.logo;
+                loadMembers(houseId);
+            } else {
+                console.log("No such document!");
             }
-          });
-
-          function openModal(memberId) {
-  const docRef = doc(db, "houses", houseId, "members", memberId);
-  getDoc(docRef)
-    .then((docSnapshot) => {
-      if (docSnapshot.exists()) {
-        const memberData = docSnapshot.data();
-        console.log(memberId)
-        // 기존 데이터 바인딩
-        document.querySelector("#memberId").textContent =  memberData.memberId;
-        document.querySelector(".modalName").textContent = memberData.name;
-        document.querySelector(".modalImage").src = memberData.image;
-        document.querySelector(".modalSummary").textContent = memberData.summary;
-
-        // 추가 정보 바인딩
-        document.querySelector(".modalStyle").textContent = memberData.style || "스타일 정보 없음";
-        document.querySelector(".modalMBTI").textContent = memberData.mbti || "MBTI 정보 없음";
-        document.querySelector(".modalAdvantages").textContent = memberData.advantages || "장점 정보 없음";
-        
-        const blogLink = document.querySelector(".modalBlogUrl");
-        if (memberData.blogUrl) {
-          blogLink.href = memberData.blogUrl;
-          blogLink.textContent = "블로그 방문하기";
-          blogLink.style.display = "inline"; // 블로그 링크가 있는 경우에만 표시
-        } else {
-          blogLink.style.display = "none"; // 블로그 링크가 없는 경우 숨김
         }
 
-        // 모달 표시
-        document.querySelector(".memberModal").style.display = "block";
-      } else {
-        console.log("No such member!");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching member data:", error);
+        async function loadMembers() {
+            const membersContainer = document.querySelector(".members");
+            const querySnapshot = await getDocs(collection(db, "houses", houseId, "members"));
+            membersContainer.innerHTML = ""; // Clear previous members
+            querySnapshot.forEach((doc) => {
+                const memberData = doc.data();
+                const memberDiv = document.createElement("div");
+                memberDiv.className = "member";
+                memberDiv.dataset.memberid = doc.id;
+                memberDiv.innerHTML = `
+                    <div class="profile">
+                        <div class="profile-left">
+                            <img src="${memberData.image}" alt="${memberData.name}">
+                            <h3>${memberData.name}</h3>
+                        </div>
+                        <div class="profile-summary">
+                            ${memberData.summary}
+                        </div>
+                    </div>
+                `;
+                membersContainer.appendChild(memberDiv);
+            });
+        }
+
+        function openModal(memberId) {
+            const docRef = doc(db, "houses", houseId, "members", memberId);
+            getDoc(docRef)
+                .then((docSnapshot) => {
+                    if (docSnapshot.exists()) {
+                        const memberData = docSnapshot.data();
+                        currentMemberId = memberId; // Set current member ID
+
+                        // Binding existing data
+                        document.querySelector(".modalName").textContent = memberData.name;
+                        document.querySelector(".modalImage").src = memberData.image;
+                        document.querySelector(".modalSummary").textContent = memberData.summary;
+                        document.querySelector(".modalStyle").textContent = memberData.style || "";
+                        document.querySelector(".modalMBTI").textContent = memberData.mbti || "";
+                        document.querySelector(".modalAdvantages").textContent = memberData.advantages || "";
+
+                        const blogLink = document.querySelector(".modalBlogUrl");
+                        if (memberData.blogUrl) {
+                            blogLink.href = memberData.blogUrl;
+                            blogLink.textContent = "Visit Blog";
+                            blogLink.style.display = "inline";
+                        } else {
+                            blogLink.style.display = "none";
+                        }
+
+                        // Display modal
+                        document.querySelector(".memberModal").style.display = "block";
+                    } else {
+                        console.log("No such member!");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching member data:", error);
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadHouseData();
+            document.querySelector(".members").addEventListener("click", function (event) {
+                let target = event.target.closest(".member");
+                if (target) {
+                    openModal(target.dataset.memberid);
+                }
+            });
+
+            document.querySelector(".card-close").addEventListener("click", function () {
+                document.querySelector(".memberModal").style.display = "none";
+            });
+
+            document.getElementById("editProfileBtn").addEventListener("click", function () {
+    // Display the edit form and hide the information display
+    document.getElementById("editForm").style.display = "block";
+    document.getElementById("infoDisplay").style.display = "none";
+
+    // Pre-fill the form with existing data
+    document.getElementById("editName").value = document.querySelector(".modalName").textContent;
+    document.getElementById("editSummary").value = document.querySelector(".modalSummary").textContent;
+    document.getElementById("editStyle").value = document.querySelector(".modalStyle").textContent;
+    document.getElementById("editMBTI").value = document.querySelector(".modalMBTI").textContent;
+    document.getElementById("editAdvantages").value = document.querySelector(".modalAdvantages").textContent;
+    document.getElementById("editImageURL").value = document.querySelector(".modalImage").src;
+    document.getElementById("editBlogURL").value = document.querySelector(".modalBlogUrl").href;
+});
+
+document.getElementById("saveProfileBtn").addEventListener("click", async function () {
+    const updatedData = {
+        name: document.getElementById("editName").value,
+        summary: document.getElementById("editSummary").value,
+        style: document.getElementById("editStyle").value,
+        mbti: document.getElementById("editMBTI").value,
+        advantages: document.getElementById("editAdvantages").value,
+        image: document.getElementById("editImageURL").value,
+        blogUrl: document.getElementById("editBlogURL").value
+    };
+
+    // Update Firestore document
+    const memberRef = doc(db, "houses", houseId, "members", currentMemberId);
+    await updateDoc(memberRef, updatedData).then(() => {
+        console.log("Document successfully updated!");
+
+        // Update the information display with new data from the form
+        document.querySelector(".modalName").textContent = updatedData.name;
+        document.querySelector(".modalSummary").textContent = updatedData.summary;
+        document.querySelector(".modalStyle").textContent = updatedData.style;
+        document.querySelector(".modalMBTI").textContent = updatedData.mbti;
+        document.querySelector(".modalAdvantages").textContent = updatedData.advantages;
+        document.querySelector(".modalImage").src = updatedData.image;
+        const blogLink = document.querySelector(".modalBlogUrl");
+        if (updatedData.blogUrl) {
+            blogLink.href = updatedData.blogUrl;
+            blogLink.textContent = "Visit Blog";
+            blogLink.style.display = "inline";
+        } else {
+            blogLink.style.display = "none";
+        }
+
+        // Hide the edit form and display the information display
+        document.getElementById("editForm").style.display = "none";
+        document.getElementById("infoDisplay").style.display = "flex";
+    }).catch((error) => {
+        console.error("Error updating document: ", error);
     });
-}
+});
 
-        const closeModal = document.querySelector(".close");
-        closeModal.onclick = function () {
-          document.querySelector(".modal").style.display = "none";
-        };
+        });
 
-        window.onclick = function (event) {
-          if (event.target === document.querySelector(".modal")) {
-            document.querySelector(".modal").style.display = "none";
-          }
-        };
-      });
+        document.getElementById("deleteProfileBtn").addEventListener("click", function() {
+            if (confirm("정말로 이 멤버를 삭제하시겠습니까?")) {
+                const memberRef = doc(db, "houses", houseId, "members", currentMemberId);
+                deleteDoc(memberRef)
+                    .then(() => {
+                        console.log("Document successfully deleted!");
+                        alert("멤버가 성공적으로 삭제되었습니다.");
+                        document.querySelector(".memberModal").style.display = "none";
+                        loadMembers(); // 멤버 목록을 다시 로드하여 화면을 업데이트
+                    })
+                    .catch((error) => {
+                        console.error("Error removing document: ", error);
+                        alert("삭제 중 오류가 발생했습니다.");
+                    });
+            }
+        });
+
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <div class="nav">
-        <span class="Dday">
-            부트캠프 종료까지
-            <span id="DdayCounter" class="Counter"></span><span>일</span></span>
-        </span>
-        <div>
-            <a href="index.html" class="btn-bul">불4조 기사단</a>
-        </div>
+        <span class="Dday">부트캠프 종료까지 <span id="DdayCounter" class="Counter"></span>일</span>
+        <div><a href="index.html" class="btn-bul">불4조 기사단</a></div>
         <div id="weather"><span></span><span></span></div>
     </div>
     <div class="main">
-      <div class="house-content">
-        <div id="houseTitle">
-          <img
-            id="houseLogo"
-            src=""
-            alt="House Logo"
-            style="width: 100px; height: 100px"
-          />
-          <h3 id="houseName"></h3>
+        <div class="house-content">
+            <div id="houseTitle">
+                <img id="houseLogo" src="" alt="House Logo" style="width: 100px; height: 100px" />
+                <h3 id="houseName"></h3>
+            </div>
+            <div id="introduction"></div>
         </div>
-        <div id="introduction"></div>
-      </div>
-      <div class="members"></div>
+        <div class="members"></div>
     </div>
     <div class="modal memberModal" style="display: none">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <img
-                class="modalImage"
-                src=""
-                alt="Member Image"
-                style="width: 100px; height: 100px"
-            />
-            <p display="none" id="memberId" >
-            <h4 class="modalName"></h4>
-            <p class="modalSummary"></p>
-            <p class="modalIntroduction"></p>
-            <p class="modalAdvantages"></p>
-            <p class="modalMBTI"></p>
-            <p class="modalStyle"></p>
-            <a class="modalBlogUrl" href="">Visit Blog</a>
+            <span class="card-close">&times;</span>
+            <div id="infoDisplay">
+                <img class="modalImage" src="" alt="Member Image" style="width: 120px; height: 120px" />
+                <h4 class="modalName"></h4>
+                <p>강점 : <span class="modalAdvantages"></span></p>
+                <p>MBTI : <span class="modalMBTI"></span></p>
+                <p>스타일 : <span class="modalStyle"></span></p
+                <p>소개 : <span class="modalSummary"></span></p>
+                <a  target="_blank"class="modalBlogUrl" href="">Visit Blog</a>
+                <div>
+                    <button type="button" id="editProfileBtn" class="btn btn-outline-secondary">수정하기</button>
+                    <button id="deleteProfileBtn" type="button" class="btn btn-outline-danger">삭제하기</button>
+                </div>
+            </div>
+            <div id="editForm" style="display: none;">
+                <label>이미지 URL: <input type="url" id="editImageURL" placeholder="이미지 URL"/></label><br>
+                <label>이름: <input type="text" id="editName" placeholder="이름"/></label><br>
+                <label>강점: <input type="text" id="editAdvantages" placeholder="강점"/></label><br>
+                <label>MBTI: <input type="text" id="editMBTI" placeholder="MBTI"/></label><br>
+                <label>스타일: <input type="text" id="editStyle" placeholder="스타일"/></label><br>
+                <label>소개: <input type="text" id="editSummary" placeholder="소개"/></label><br>
+                <label>블로그 URL: <input type="url" id="editBlogURL" placeholder="블로그 URL"/></label><br>
+                <button type="button" id="saveProfileBtn" class="btn btn-primary">저장하기</button>
+            </div>
         </div>
     </div>
-    
-
+</div>
+<div class="modal memberModal" style="display: none">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img class="modalImage" src="" alt="Member Image" style="width: 120px; height: 120px" />
+        <h4 class="modalName"></h4>
+        <div id="infoDisplay">
+            <p>강점 : <span class="modalAdvantages"></span></p>
+            <p>MBTI : <span class="modalMBTI"></span></p>
+            <p>스타일 : <span class="modalStyle"></span></p>
+            <p>소개 : <span class="modalSummary"></span></p>
+            <a class="modalBlogUrl" href="">Visit Blog</a>
+            <div>
+                <button type="button" id="editProfileBtn" class="btn btn-outline-secondary">수정하기</button>
+                <button id="deleteProfileBtn" type="button" class="btn btn-outline-danger">삭제하기</button>
+            </div>
+        </div>
+        <div id="editForm" style="display: none;">
+            <label>이름: <input type="text" id="editName" placeholder="이름"/></label><br>
+            <label>소개: <input type="text" id="editSummary" placeholder="소개"/></label><br>
+            <label>스타일: <input type="text" id="editStyle" placeholder="스타일"/></label><br>
+            <label>MBTI: <input type="text" id="editMBTI" placeholder="MBTI"/></label><br>
+            <label>강점: <input type="text" id="editAdvantages" placeholder="강점"/></label><br>
+            <button type="button" id="saveProfileBtn" class="btn btn-primary">저장하기</button>
+        </div>
+    </div>
 </div>
 <div class="memberAddPopup">
     <div class="modal-btn-box">
@@ -268,8 +336,8 @@
         </div>
       </div>
     </div>
-    <script src="js/scroll.js"></script>
-    <script src="js/weather.js"></script>
-    <script src="js/dday.js"></script>
-  </body>
+<script src="js/scroll.js"></script>
+<script src="js/weather.js"></script>
+<script src="js/dday.js"></script>
+</body>
 </html>
