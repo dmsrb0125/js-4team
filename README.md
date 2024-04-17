@@ -24,24 +24,24 @@
 
 ### 활용
 
-- [ ] 부트스트랩 활용
-- [ ] JQuery 활용
-- [ ] 오픈api 활용
-- [ ] firebase 활용
-- [ ] 깃허브 사용
+- [X] 부트스트랩 활용
+- [X] JQuery 활용
+- [X] 오픈api 활용
+- [X] firebase 활용
+- [X] 깃허브 사용
 
 ### View
 
-- [ ] 메인페이지 - (팀소개, 팀관련 정보, 기숙사별 팀원 목록)
-- [ ] 기숙사페이지 - (기숙사 소개, 팀원 소개, 멤버 추가)
+- [X] 메인페이지 - (팀소개, 팀관련 정보, 기숙사별 팀원 목록)
+- [X] 기숙사페이지 - (기숙사 소개, 팀원 소개, 멤버 추가)
 
 ### 기능
 
-- [ ] 부트캠프 종료 디데이 표시
-- [ ] 날씨api 가져오기
-- [ ] home으로 돌아오는 링크
-- [ ] 각 기숙사별 멤버 추가
-- [ ] 기숙사 클릭으로 기숙사 페이지 렌더링
+- [X] 부트캠프 종료 디데이 표시
+- [X] 날씨api 가져오기
+- [X] home으로 돌아오는 링크
+- [X] 각 기숙사별 멤버 추가
+- [X] 기숙사 클릭으로 기숙사 페이지 렌더링
 - [ ] 해당 멤버정보 수정기능
 - [ ] 해당 멤버정보 삭제 기능
 - [ ] 멤버클릭시 카드 모달 기능
@@ -92,8 +92,8 @@
 
 ### 기숙사별 db
 
-- [ ] 기숙사 소개 데이터베이스 연결
-- [ ] 기숙사별 인원추가 기능
+- [X] 기숙사 소개 데이터베이스 연결
+- [X] 기숙사별 인원추가 기능
 - [ ] 개인정보 수정기능
 - [ ] 해당 멤버정보 삭제 기능
 
@@ -117,31 +117,50 @@
 - 기숙사 목록 조회
   Method: GET
   Endpoint: /houses
-  Description : 기숙시 목록, 해당 기숙사의 멤버 목록
+  Description : 기숙사 목록, 해당 기숙사의 멤버 목록
   응답 예시:
 
         [
         {
             "houseId": "gryffindor",
             "name": "그리핀도르",
+            "introduction" : "기숙사설명",
+            "logo" : "https://..."
             "members": [
                 {
-                    "name": "Harry Potter"
-                    "image": "imageURL"
+                    "name": "해리포터"
+                    "advantages": "imageURL",
+                    "summary": "이 영화의 주인공은 나야나!",
+                    "blogUrl": "URL",
+                    "style": "강력한 외모",
+                    "image": "URL",
+                    "mbti": "XXXX",     
                 },
                 {
-                    "name": "Hermione Granger"
-                    "image": "imageURL"
+                    "name": "헤르미온느"
+                    "advantages": "imageURL",
+                    "summary": "해리포터의 여주인공",
+                    "blogUrl": "URL",
+                    "style": "아름다운 외모",
+                    "image": "URL",
+                    "mbti": "XXXX",   
                 }
             ]
         },
         {
             "houseId": "slytherin",
             "name": "슬리데린",
+            "introduction" : "기숙사설명",
+            "logo" : "https://..."
             "members": [
                 {
-                    "name": "Ron Weasley"
-                    "image": "imageURL"
+                    "name": "론 위즐리",
+                    "advantages": "imageURL",
+                    "summary": "해리포터의 여주인공",
+                    "blogUrl": "URL",
+                    "style": "아름다운 외모",
+                    "image": "URL",
+                    "mbti": "XXXX",  
                 }
             ]
         }
@@ -158,58 +177,53 @@
             "name": "그리핀도르",
             "members": [
                 {
-                "memberId": "1",
-                "name": "Harry Potter",
-                "image": "https://example.com/images/harry.jpg",
-                "age": 17,
-                "location": "London",
-                "mbti": "INTJ",
-                "hobbies": ["Quidditch", "Reading"],
-                "comment": "I solemnly swear that I am up to no good."
+                    "name": "해리포터"
+                    "advantages": "imageURL",
+                    "summary": "이 영화의 주인공은 나야나!",
+                    "blogUrl": "URL",
+                    "style": "강력한 외모",
+                    "image": "URL",
+                    "mbti": "XXXX",     
                 },
                 {
-                "memberId": "2",
-                "name": "Hermione Granger",
-                "image": "https://example.com/images/hermione.jpg",
-                "age": 17,
-                "location": "London",
-                "mbti": "INFJ",
-                "hobbies": ["Reading", "Studying"],
-                "comment": "When in doubt, go to the library."
+                    "name": "헤르미온느"
+                    "advantages": "imageURL",
+                    "summary": "해리포터의 여주인공",
+                    "blogUrl": "URL",
+                    "style": "아름다운 외모",
+                    "image": "URL",
+                    "mbti": "XXXX",   
                 }
             ]
         }
 
-- 멤버 추가
-  Method: POST
-  Endpoint: /houses/{houseId}/members
-  Description: 특정 기숙사에 새 멤버를 추가합니다.
-  요청, 응답 예시:
+  - 멤버 추가
+    Method: POST
+    Endpoint: /houses/{houseId}/members
+    Description: 특정 기숙사에 새 멤버를 추가합니다.
+    요청, 응답 예시:
 
-        {
-        "name": "Ron Weasley",
-        "image": "https://example.com/images/ron.jpg",
-        "advantages": "Quick thinker, strategic mind",
-        "style": "Casual, prefers direct communication",
-        "blogUrl": "https://ronweasleyblog.com",
-        "mbti": "ESTP",
-        "introduction": "Loyal friend and a natural leader."
-        }
+          {
+              "name": "해리포터"
+              "advantages": "imageURL",
+              "summary": "이 영화의 주인공은 나야나!",
+              "blogUrl": "URL",
+              "style": "강력한 외모",
+              "image": "URL",
+              "mbti": "XXXX",     
+          },
 
-
-
-
-        {
-        "success": true,
-        "memberId": "3",
-        "name": "Ron Weasley",
-        "image": "https://example.com/images/ron.jpg",
-        "advantages": "Quick thinker, strategic mind",
-        "style": "Casual, prefers direct communication",
-        "blogUrl": "https://ronweasleyblog.com",
-        "mbti": "ESTP",
-        "introduction": "Loyal friend and a natural leader."
-        }
+          {
+              "success": true,
+              "memberId": "3",
+              "name": "Ron Weasley",
+              "image": "https://example.com/images/ron.jpg",
+              "advantages": "Quick thinker, strategic mind",
+              "style": "Casual, prefers direct communication",
+              "blogUrl": "https://ronweasleyblog.com",
+              "mbti": "ESTP",
+              "introduction": "Loyal friend and a natural leader."
+          }
 
 - 멤버 정보 수정
   Method: PUT
