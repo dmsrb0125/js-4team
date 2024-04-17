@@ -18,14 +18,14 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 class Member {
-    constructor(name, image, advantages, style, blogUrl, mbti, introduction) {
+    constructor(name, image, advantages, style, blogUrl, mbti, summary) {
         this.name = name;
         this.image = image;
         this.advantages = advantages;
         this.style = style;
         this.blogUrl = blogUrl;
         this.mbti = mbti;
-        this.introduction = introduction;
+        this.summary = summary;
     }
 }
 
@@ -46,7 +46,7 @@ async function addMemberToFirestore(houseId, member) {
             style: member.style,
             blogUrl: member.blogUrl,
             mbti: member.mbti,
-            introduction: member.introduction
+            summary: member.summary
         });
         console.log('Member added to Firestore successfully');
     } catch (error) {
@@ -68,16 +68,16 @@ document.getElementById("confirm").addEventListener("click", function () {
     let style = document.getElementById("memberStyle").value;
     let blogUrl = document.getElementById("memberBlogUrl").value;
     let mbti = document.getElementById("memberMBTI").value;
-    let introduction = document.getElementById("memberIntroduction").value;
+    let summary = document.getElementById("memberSummary").value;
 
     // 입력값 검증
-    if (!name || !image || !advantages || !style || !blogUrl || !mbti || !introduction) {
+    if (!name || !image || !advantages || !style || !blogUrl || !mbti || !summary) {
         alert("모든 필드를 입력해주세요.");
         return;
     }
 
     // Member 객체 생성
-    let member = new Member(name, image, advantages, style, blogUrl, mbti, introduction);
+    let member = new Member(name, image, advantages, style, blogUrl, mbti, summary);
 
     // Member 객체를 Firebase에 저장
     addMemberToFirestore(houseIdPK, member);
@@ -89,11 +89,10 @@ document.getElementById("confirm").addEventListener("click", function () {
     setInputValue("memberStyle", "");
     setInputValue("memberBlogUrl", "");
     setInputValue("memberMBTI", "");
-    setInputValue("memberIntroduction", "");
+    setInputValue("memberSummary", "");
 
     alert("저장되었습니다.");
     modalClose();
-    window.location.reload();
 });
 
 function modalClose() {

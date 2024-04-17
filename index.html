@@ -1,118 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>불4조 기사단</title>
     <!-- Bootstrap -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
     />
-
     <!-- Style -->
-    <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="css/nav.css" />
-    <link rel="stylesheet" href="css/houseList.css" />
-
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
-      * {
-        font-family: "Nanum Pen Script", cursive;
-        font-weight: 400;
-        font-style: normal;
-      }
-    </style>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/nav.css"/>
+    <link rel="stylesheet" href="css/houseList.css"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  </head>
-  <body>
-    <div class="nav">
-      <h1>불4조 기사단</h1>
-    </div>
-    <hr class="featurette-divider" />
-    <div id="carouselExampleDark" class="carousel carousel-dark slide">
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIeWet-xCTyuVDJDMx7rH5p_4uGHAZmVsxNx6RkOCG3a7hOdxOxK04RxEameyVv8ADNvw&usqp=CAU"
-            class="d-block w-100"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <p>Some representative placeholder content for the first slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item" data-bs-interval="2000">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVOzJd8EDfi1SWX0u6HaVn0ZTqri4qWfPERpzK02kyF8LBSh2QdFkGgJcc5N1l2mRQSpc&usqp=CAU"
-            class="d-block w-100"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <p>Some representative placeholder content for the second slide.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq5B7X1RaLy-JmkJpjg7C33OhIsMkEncg8cW-zFRaXI6ADGFYWbLbC11eyNl87rzefWEA&usqp=CAU"
-            class="d-block w-100"
-            alt="..."
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <p>Some representative placeholder content for the third slide.</p>
-          </div>
-        </div>
-      </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide="prev"
-      >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleDark"
-        data-bs-slide="next"
-      >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-    <hr class="featurette-divider" />
-    <button class="houseListBtn"></button>
-    <div class="houseList"></div>
-    <!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
-    <script src="js/houseListBtn.js"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 
-    <!-- Firebase and main script -->
-    <script src="js/module/firebase-conn.js" type="module"></script>
-    <script src="js/house/popup/houseMemberPopup.js" type="module"></script>
-  </body>
+        * {
+            font-family: "Nanum Pen Script", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="css/nav.css"/>
+    <link rel="stylesheet" href="css/houseList.css"/>
+
+    <!-- main script -->
+    <script type="module">
+        import {loadHousesAndMembers} from "./js/main.js";
+
+        window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+    </script>
+</head>
+<body>
+<div class="nav">
+    <h1>불4조 기사단</h1>
+</div>
+<hr class="featurette-divider"/>
+<div class="main"></div>
+<hr class="featurette-divider"/>
+<button class="houseListBtn"></button>
+<div class="houseList"></div>
+
+</body>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+        authDomain: "js-4teamproject.firebaseapp.com",
+        projectId: "js-4teamproject",
+        storageBucket: "js-4teamproject.appspot.com",
+        messagingSenderId: "514915830726",
+        appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+        measurementId: "G-ZGBX3PPB98",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadHousesAndMembers() {
+        const querySnapshot = await getDocs(collection(db, "houses"));
+        const houseList = document.querySelector(".houseList");
+
+        querySnapshot.forEach(async (doc) => {
+            const houseData = doc.data();
+            const houseDiv = document.createElement("div");
+            houseDiv.style.backgroundImage = `url(${houseData.image})`;
+            houseDiv.style.backgroundPosition = "center";
+            houseDiv.style.backgroundSize = "cover";
+            houseDiv.className = "house";
+            houseDiv.innerHTML = `
+            <img src="${houseData.logo}" alt="${houseData.name}" style="width:50px; height:50px;">
+            <div class="house-name">${houseData.name}</div>
+          `;
+
+            // Attach a click event to navigate to the house detail page
+            houseDiv.addEventListener("click", () => {
+                window.location.href = `house.html?houseId=${doc.id}`;
+            });
+
+            // Load members directly under each house
+            const membersSnapshot = await getDocs(
+                collection(db, "houses", doc.id, "members")
+            );
+            const membersDiv = document.createElement("div");
+            membersDiv.className = "members";
+
+            membersSnapshot.forEach((memberDoc) => {
+                const memberData = memberDoc.data();
+                const memberItem = document.createElement("div");
+                memberItem.className = "member";
+                memberItem.innerHTML = `
+              <img src="${memberData.image}" alt="${memberData.name}" style="width:60px; height:60px;">
+              <span>${memberData.name}</span>
+            `;
+                membersDiv.appendChild(memberItem);
+            });
+
+            houseDiv.appendChild(membersDiv);
+            houseList.appendChild(houseDiv);
+        });
+    }
+
+    window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+</script>
+<!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
+<script src="js/houseListBtn.js"></script>
 </html>

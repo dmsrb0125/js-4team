@@ -1,250 +1,134 @@
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-y: auto; /* 필요한 경우 스크롤 허용 */
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-  position: relative;
-  background-image: url("../img/main.jpg");
-  background-position: center;
-  background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-y: auto; /* 필요한 경우 스크롤 허용 */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    position: relative;
+    background-image: url("../img/main.jpg");
+    background-position: center;
+    background-size: cover;
 }
 
 body::before {
-  content: ""; /* 필수 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-position: center;
-  z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
+    content: ""; /* 필수 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-position: center;
+    z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  color: black;
-  width: 100%;
-  margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    width: 100%;
+    margin: 30px 0;
 }
 
 .house-content {
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
 
 .members {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  color: black;
-  width: 100%;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    color: black;
+    width: 100%;
+    gap: 10px;
+}
+
+
+.member:hover {
+    scale: 1.05;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .profile {
-  border: 3px solid rgba(0, 0, 0, 0.5);
-  background-color: wheat;
-  width: 800px;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.5);
+    background-color: wheat;
+    width: 800px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
 }
 .profile-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 50px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 30px 30px 30px;
 }
 .profile-left img {
-  width: 120px;
-  height: 120px;
-  border: rgba(0, 0, 0, 0.75) solid 1px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: rgba(0, 0, 0, 0.75) solid 1px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
 }
 
 .profile-summary {
-  width: 100%;
-  height: 100%;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #introduction {
-  position: relative; /* 포지셔닝 컨텍스트 설정 */
-  width: 1000px;
-  height: 250px;
-  margin: 30px auto;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
-  overflow: hidden; /* 가상 요소가 경계 밖으로 나가지 않도록 제한 */
+    position: relative; /* 포지셔닝 컨텍스트 설정 */
+    width: 1000px;
+    height: 250px;
+    margin: 30px auto;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    overflow: hidden; /* 가상 요소가 경계 밖으로 나가지 않도록 제한 */
 }
 
 #introduction::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("https://i.namu.wiki/i/jZ0MbY9g1SfcFPrreZCIaEHgDNxGjGmkSycub3wTqJWY1pKOAAoUMMeB3ZWLgZJ0Uxc4MrZ2iqb1D-Vsb1Y67g.webp");
-  background-position: center;
-  background-size: cover;
-  opacity: 0.7;
-  z-index: -1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("https://i.namu.wiki/i/jZ0MbY9g1SfcFPrreZCIaEHgDNxGjGmkSycub3wTqJWY1pKOAAoUMMeB3ZWLgZJ0Uxc4MrZ2iqb1D-Vsb1Y67g.webp");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
 }
 
 #houseName {
-  color: white;
-  font-size: 50px;
+    color: white;
+    font-size: 50px;
 }
 
 #houseTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100px;
-  min-height: 100vh;
-  overflow-y: auto; /* 필요한 경우 스크롤 허용 */
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-  background-position: center;
-  background-size: cover;
-}
-
-body::before {
-  content: ""; /* 필수 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-position: center;
-  z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  color: black;
-  width: 100%;
-  margin: 30px 0;
-}
-
-.house-content {
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.members {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  color: black;
-  width: 100%;
-  gap: 10px;
-}
-
-.profile {
-  border: 3px solid rgba(0, 0, 0, 0.5);
-  background-color: wheat;
-  width: 800px;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  border-radius: 10px;
-}
-
-.profile-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 50px 30px 30px 30px;
-}
-
-.profile-left img {
-  width: 120px;
-  height: 120px;
-  border: rgba(0, 0, 0, 0.75) solid 1px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 50%;
-}
-
-.profile-summary {
-  width: 100%;
-  height: 100%;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#introduction {
-  position: relative; /* 포지셔닝 컨텍스트 설정 */
-  width: 1000px;
-  height: 250px;
-  margin: 30px auto;
-  border-radius: 10px;
-  padding: 10px;
-  font-size: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-weight: bold;
-  overflow: hidden; /* 가상 요소가 경계 밖으로 나가지 않도록 제한 */
-}
-
-#introduction::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("https://i.namu.wiki/i/jZ0MbY9g1SfcFPrreZCIaEHgDNxGjGmkSycub3wTqJWY1pKOAAoUMMeB3ZWLgZJ0Uxc4MrZ2iqb1D-Vsb1Y67g.webp");
-  background-position: center;
-  background-size: cover;
-  opacity: 0.7;
-  z-index: -1;
-}
-
-#houseName {
-  color: white;
-  font-size: 50px;
-}
-
-#houseTitle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
 }

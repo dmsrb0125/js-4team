@@ -1,38 +1,35 @@
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-y: auto; /* 필요한 경우 스크롤 허용 */
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-  position: relative;
-  background-image: url("../img/background-main.jpg");
-  background-position: center;
-  background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-y: auto; /* 필요한 경우 스크롤 허용 */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+    position: relative;
+    background-image: url("../img/background-main.jpg");
+    background-position: center;
+    background-size: cover;
 }
 
 body::before {
-  content: ""; /* 필수 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.5); /* 투명 흰 배경 설정 */
-  opacity: 0.5; /* 투명도 조정 */
-  z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
+    content: ""; /* 필수 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5); /* 투명 흰 배경 설정 */
+    opacity: 0.5; /* 투명도 조정 */
+    z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
 }
 
-.carousel-item img {
-  opacity: 0.7;
-
-  height: 400px;
-}
-
-.carousel-item p {
-  font-size: 30px;
-  font-weight: bold;
-  color: white;
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
 }
