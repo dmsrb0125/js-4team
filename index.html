@@ -17,6 +17,19 @@
     <link rel="stylesheet" href="css/nav.css"/>
     <link rel="stylesheet" href="css/houseList.css"/>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+
+      * {
+        font-family: "Nanum Pen Script", cursive;
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/houseList.css" />
 
     <!-- main script -->
     <script type="module">
@@ -36,4 +49,77 @@
 <div class="houseList"></div>
 
 </body>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA6V95xWNIVA4mPq00Us79ScnSL09a8fk8",
+        authDomain: "js-4teamproject.firebaseapp.com",
+        projectId: "js-4teamproject",
+        storageBucket: "js-4teamproject.appspot.com",
+        messagingSenderId: "514915830726",
+        appId: "1:514915830726:web:3805ff801aa871ba9ac0c7",
+        measurementId: "G-ZGBX3PPB98",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      async function loadHousesAndMembers() {
+        const querySnapshot = await getDocs(collection(db, "houses"));
+        const houseList = document.querySelector(".houseList");
+
+        querySnapshot.forEach(async (doc) => {
+          const houseData = doc.data();
+          const houseDiv = document.createElement("div");
+          houseDiv.style.backgroundImage = `url(${houseData.image})`;
+          houseDiv.style.backgroundPosition = "center";
+          houseDiv.style.backgroundSize = "cover";
+          houseDiv.className = "house";
+          houseDiv.innerHTML = `
+            <img src="${houseData.logo}" alt="${houseData.name}" style="width:50px; height:50px;">
+            <div class="house-name">${houseData.name}</div>
+          `;
+
+          // Attach a click event to navigate to the house detail page
+          houseDiv.addEventListener("click", () => {
+            window.location.href = `house.html?houseId=${doc.id}`;
+          });
+
+          // Load members directly under each house
+          const membersSnapshot = await getDocs(
+            collection(db, "houses", doc.id, "members")
+          );
+          const membersDiv = document.createElement("div");
+          membersDiv.className = "members";
+
+          membersSnapshot.forEach((memberDoc) => {
+            const memberData = memberDoc.data();
+            const memberItem = document.createElement("div");
+            memberItem.className = "member";
+            memberItem.innerHTML = `
+              <img src="${memberData.image}" alt="${memberData.name}" style="width:60px; height:60px;">
+              <span>${memberData.name}</span>
+            `;
+            membersDiv.appendChild(memberItem);
+          });
+
+          houseDiv.appendChild(membersDiv);
+          houseList.appendChild(houseDiv);
+        });
+      }
+
+      window.addEventListener("DOMContentLoaded", loadHousesAndMembers);
+    </script>
+  </head>
+
+  <body>
+    <div class="nav">
+      <h1>불4조 기사단</h1>
+    </div>
+    <hr class="featurette-divider" />
+    <div class="main"></div>
+    <hr class="featurette-divider" />
+    <button class="houseListBtn"></button>
+    <div class="houseList"></div>
+    <!-- 기숙사 목록과 멤버 목록이 표시될 곳 -->
+    <script src="js/houseListBtn.js"></script>
+  </body>
 </html>
