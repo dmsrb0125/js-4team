@@ -1,5 +1,3 @@
-// main.js
-
 import { db, collection, getDocs } from "./module/firebase-conn.js";
 
 async function loadHousesAndMembers() {

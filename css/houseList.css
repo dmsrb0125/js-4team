@@ -75,3 +75,13 @@
   object-fit: cover; /* 이미지 비율 유지 */
   border: 1px solid white;
 }
+
+.house:hover {
+  scale: 1.05;
+  cursor: pointer;
+}
+
+.houseListBtn:hover {
+  scale: 1.05;
+  cursor: pointer;
+}
