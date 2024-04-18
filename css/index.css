@@ -25,6 +25,18 @@ body::before {
   z-index: -1; /* 가상 요소를 배경보다 뒤로 설정 */
 }
 
+.carousel {
+  width: 50%;
+  margin: 100px auto;
+
+  margin-top: 200px;
+}
+
+.carousel-caption {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 .carousel-item img {
   display: flex;
   flex-direction: column;
@@ -35,13 +47,11 @@ body::before {
   opacity: 0.7;
   border-radius: 10px;
 }
-
-.carousel {
-  width: 50%;
-  margin: 100px auto;
-}
-
 .carousel-item p {
   color: black;
   font-size: 30px;
+  margin-top: 20px;
+}
+.carousel-item h1 {
+  margin-top: 100px;
 }

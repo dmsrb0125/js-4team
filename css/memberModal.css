@@ -1,7 +1,7 @@
 .modal {
   display: none; /* 초기에는 숨김 */
   position: fixed; /* 화면에 고정 */
-  z-index: 1; /* 다른 요소 위에 표시 */
+  z-index: 10; /* 다른 요소 위에 표시 */
   left: 0;
   top: 0;
   width: 100%; /* 전체 너비 */
