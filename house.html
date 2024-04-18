@@ -296,45 +296,20 @@
                 </div>
             </div>
             <div id="editForm" style="display: none;">
-                <label>이미지 URL: <input type="url" id="editImageURL" maxlength="2048"></label><br>
+                <label>이미지 URL: <input type="url" id="editImageURL"></label><br>
                 <label>이름: <input type="text" id="editName" maxlength="10"/></label><br>
                 <label>강점: <input type="text" id="editAdvantages" maxlength="20"/></label><br>
                 <label>MBTI: <input type="text" id="editMBTI" maxlength="4"/></label><br>
                 <label>스타일: <input type="text" id="editStyle" maxlength="10"/></label><br>
                 <label>소개: <input type="text" id="editSummary" maxlength="20"/></label><br>
-                <label>블로그 URL: <input type="url" id="editBlogURL" maxlength="2048"/></label><br>
+                <label>블로그 URL: <input type="url" id="editBlogURL" /></label><br>
                 <button type="button" id="saveProfileBtn" class="btn btn-primary">저장하기</button>
             </div>
             
         </div>
     </div>
 </div>
-<div class="modal memberModal" style="display: none">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <img class="modalImage" src="" alt="Member Image" style="width: 120px; height: 120px" />
-        <h4 class="modalName"></h4>
-        <div id="infoDisplay">
-            <p>강점 : <span class="modalAdvantages"></span></p>
-            <p>MBTI : <span class="modalMBTI"></span></p>
-            <p>스타일 : <span class="modalStyle"></span></p>
-            <p>소개 : <span class="modalSummary"></span></p>
-            <a class="modalBlogUrl" href="">Visit Blog</a>
-            <div>
-                <button type="button" id="editProfileBtn" class="btn btn-outline-secondary">수정하기</button>
-                <button id="deleteProfileBtn" type="button" class="btn btn-outline-danger">삭제하기</button>
-            </div>
-        </div>
-        <div id="editForm" style="display: none;">
-            <label>이름: <input type="text" id="editName" placeholder="이름"/></label><br>
-            <label>소개: <input type="text" id="editSummary" placeholder="소개"/></label><br>
-            <label>스타일: <input type="text" id="editStyle" placeholder="스타일"/></label><br>
-            <label>MBTI: <input type="text" id="editMBTI" placeholder="MBTI"/></label><br>
-            <label>강점: <input type="text" id="editAdvantages" placeholder="강점"/></label><br>
-            <button type="button" id="saveProfileBtn" class="btn btn-primary">저장하기</button>
-        </div>
-    </div>
-</div>
+
 <div class="memberAddPopup">
     <div class="modal-btn-box">
         <button type="button" id="modal-open">인원 추가</button>
@@ -352,7 +327,7 @@
               <div class="body-contentbox">
                 <form id="myForm">
                     <label for="memberImage"></label>
-                    <input type="url" id="memberImage" name="email" placeholder="프로필 이미지 URL" maxlength="2048">
+                    <input type="url" id="memberImage" name="email" placeholder="프로필 이미지 URL" >
                     <label for="memberName"></label>
                     <input type="text" id="memberName" name="name" placeholder="이름" maxlength="10">
                     <label for="memberAdvantages"></label>
@@ -364,7 +339,7 @@
                     <label for="memberSummary"></label>
                     <input type="text" id="memberSummary" name="name" placeholder="간략소개" maxlength="20">
                     <label for="memberBlogUrl"></label>
-                    <input type="url" id="memberBlogUrl" name="name" placeholder="블로그 URL 주소" maxlength="2048">
+                    <input type="url" id="memberBlogUrl" name="name" placeholder="블로그 URL 주소" >
                 </form>
                 
               </div>
