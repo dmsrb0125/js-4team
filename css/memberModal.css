@@ -23,7 +23,7 @@
   font-weight: bold;
   font-size: 20px;
   width: 350px; /* 모달 너비 */
-  height: 550px; /* 모달 높이 */
+  height: 570px; /* 모달 높이 */
   overflow-y: auto; /* 내용이 많을 때 스크롤 */
   border-radius: 10px;
   display: flex;
@@ -86,7 +86,8 @@
 
 #editForm {
   margin-top: 35px;
-  text-align: center;
+  margin-left: 120px;
+  width: 100%;
 }
 
 #editForm input,

@@ -143,65 +143,83 @@
                     openModal(target.dataset.memberid);
                 }
             });
-
+           // 모달 닫기 버튼 이벤트 리스너
             document.querySelector(".card-close").addEventListener("click", function () {
                 document.querySelector(".memberModal").style.display = "none";
+                document.getElementById("editForm").style.display = "none";  // 수정 폼 숨기기
+                document.getElementById("infoDisplay").style.display = "flex";  // 정보 표시 부분 다시 보이게 하기
+
+                // 입력 필드 초기화
+                document.getElementById("editName").value = '';
+                document.getElementById("editSummary").value = '';
+                document.getElementById("editStyle").value = '';
+                document.getElementById("editMBTI").value = '';
+                document.getElementById("editAdvantages").value = '';
+                document.getElementById("editImageURL").value = '';
+                document.getElementById("editBlogURL").value = '';
             });
 
+          
+
             document.getElementById("editProfileBtn").addEventListener("click", function () {
-    // Display the edit form and hide the information display
-    document.getElementById("editForm").style.display = "block";
-    document.getElementById("infoDisplay").style.display = "none";
+                // Display the edit form and hide the information display
+                document.getElementById("editForm").style.display = "block";
+                document.getElementById("infoDisplay").style.display = "none";
 
-    // Pre-fill the form with existing data
-    document.getElementById("editName").value = document.querySelector(".modalName").textContent;
-    document.getElementById("editSummary").value = document.querySelector(".modalSummary").textContent;
-    document.getElementById("editStyle").value = document.querySelector(".modalStyle").textContent;
-    document.getElementById("editMBTI").value = document.querySelector(".modalMBTI").textContent;
-    document.getElementById("editAdvantages").value = document.querySelector(".modalAdvantages").textContent;
-    document.getElementById("editImageURL").value = document.querySelector(".modalImage").src;
-    document.getElementById("editBlogURL").value = document.querySelector(".modalBlogUrl").href;
-});
+                // Pre-fill the form with existing data
+                document.getElementById("editName").value = document.querySelector(".modalName").textContent;
+                document.getElementById("editSummary").value = document.querySelector(".modalSummary").textContent;
+                document.getElementById("editStyle").value = document.querySelector(".modalStyle").textContent;
+                document.getElementById("editMBTI").value = document.querySelector(".modalMBTI").textContent;
+                document.getElementById("editAdvantages").value = document.querySelector(".modalAdvantages").textContent;
+                document.getElementById("editImageURL").value = document.querySelector(".modalImage").src;
+                document.getElementById("editBlogURL").value = document.querySelector(".modalBlogUrl").href;
+            });
 
-document.getElementById("saveProfileBtn").addEventListener("click", async function () {
-    const updatedData = {
-        name: document.getElementById("editName").value,
-        summary: document.getElementById("editSummary").value,
-        style: document.getElementById("editStyle").value,
-        mbti: document.getElementById("editMBTI").value,
-        advantages: document.getElementById("editAdvantages").value,
-        image: document.getElementById("editImageURL").value,
-        blogUrl: document.getElementById("editBlogURL").value
-    };
+            document.getElementById("saveProfileBtn").addEventListener("click", async function () {
+                const updatedData = {
+                    name: document.getElementById("editName").value,
+                    summary: document.getElementById("editSummary").value,
+                    style: document.getElementById("editStyle").value,
+                    mbti: document.getElementById("editMBTI").value,
+                    advantages: document.getElementById("editAdvantages").value,
+                    image: document.getElementById("editImageURL").value,
+                    blogUrl: document.getElementById("editBlogURL").value
+                };
+                if (!updatedData.name || !updatedData.summary || !updatedData.style ||
+                    !updatedData.mbti || !updatedData.advantages || !updatedData.image) {
+                    alert("모든 필드를 채워주세요.");
+                    return; // 저장 로직을 중단합니다.
+                }
+                            // Update Firestore document
+                const memberRef = doc(db, "houses", houseId, "members", currentMemberId);
+                await updateDoc(memberRef, updatedData).then(() => {
+                    console.log("Document successfully updated!");
+                    alert("수정이 완료되었습니다."); // 사용자에게 저장 완료 알림
 
-    // Update Firestore document
-    const memberRef = doc(db, "houses", houseId, "members", currentMemberId);
-    await updateDoc(memberRef, updatedData).then(() => {
-        console.log("Document successfully updated!");
+                    // Update the information display with new data from the form
+                    document.querySelector(".modalName").textContent = updatedData.name;
+                    document.querySelector(".modalSummary").textContent = updatedData.summary;
+                    document.querySelector(".modalStyle").textContent = updatedData.style;
+                    document.querySelector(".modalMBTI").textContent = updatedData.mbti;
+                    document.querySelector(".modalAdvantages").textContent = updatedData.advantages;
+                    document.querySelector(".modalImage").src = updatedData.image;
+                    const blogLink = document.querySelector(".modalBlogUrl");
+                    if (updatedData.blogUrl) {
+                        blogLink.href = updatedData.blogUrl;
+                        blogLink.textContent = "Visit Blog";
+                        blogLink.style.display = "inline";
+                    } else {
+                        blogLink.style.display = "none";
+                    }
 
-        // Update the information display with new data from the form
-        document.querySelector(".modalName").textContent = updatedData.name;
-        document.querySelector(".modalSummary").textContent = updatedData.summary;
-        document.querySelector(".modalStyle").textContent = updatedData.style;
-        document.querySelector(".modalMBTI").textContent = updatedData.mbti;
-        document.querySelector(".modalAdvantages").textContent = updatedData.advantages;
-        document.querySelector(".modalImage").src = updatedData.image;
-        const blogLink = document.querySelector(".modalBlogUrl");
-        if (updatedData.blogUrl) {
-            blogLink.href = updatedData.blogUrl;
-            blogLink.textContent = "Visit Blog";
-            blogLink.style.display = "inline";
-        } else {
-            blogLink.style.display = "none";
-        }
-
-        // Hide the edit form and display the information display
-        document.getElementById("editForm").style.display = "none";
-        document.getElementById("infoDisplay").style.display = "flex";
-    }).catch((error) => {
-        console.error("Error updating document: ", error);
-    });
-});
+                    // Hide the edit form and display the information display
+                    document.getElementById("editForm").style.display = "none";
+                    document.getElementById("infoDisplay").style.display = "flex";
+                }).catch((error) => {
+                    console.error("Error updating document: ", error);
+                });
+            });
 
         });
 
@@ -221,6 +239,27 @@ document.getElementById("saveProfileBtn").addEventListener("click", async functi
                     });
             }
         });
+        // "취소" 버튼 이벤트 리스너 추가
+        document.getElementById("close").addEventListener("click", function () {
+        // 입력란 초기화
+        setInputValue("memberName", "");
+        setInputValue("memberImage", "");
+        setInputValue("memberAdvantages", "");
+        setInputValue("memberStyle", "");
+        setInputValue("memberBlogUrl", "");
+        setInputValue("memberMBTI", "");
+        setInputValue("memberSummary", "");
+
+        // 모달 닫기
+        modalClose();
+        alert("입력 데이터가 초기화되었습니다.");
+        });
+
+        // 모달 닫기 함수
+        function modalClose() {
+        $("#popup").fadeOut();
+        }
+
 
     </script>
 </head>
@@ -257,15 +296,16 @@ document.getElementById("saveProfileBtn").addEventListener("click", async functi
                 </div>
             </div>
             <div id="editForm" style="display: none;">
-                <label>이미지 URL: <input type="url" id="editImageURL" placeholder="이미지 URL"/></label><br>
-                <label>이름: <input type="text" id="editName" placeholder="이름"/></label><br>
-                <label>강점: <input type="text" id="editAdvantages" placeholder="강점"/></label><br>
-                <label>MBTI: <input type="text" id="editMBTI" placeholder="MBTI"/></label><br>
-                <label>스타일: <input type="text" id="editStyle" placeholder="스타일"/></label><br>
-                <label>소개: <input type="text" id="editSummary" placeholder="소개"/></label><br>
-                <label>블로그 URL: <input type="url" id="editBlogURL" placeholder="블로그 URL"/></label><br>
+                <label>이미지 URL: <input type="url" id="editImageURL" maxlength="2048"></label><br>
+                <label>이름: <input type="text" id="editName" maxlength="10"/></label><br>
+                <label>강점: <input type="text" id="editAdvantages" maxlength="20"/></label><br>
+                <label>MBTI: <input type="text" id="editMBTI" maxlength="4"/></label><br>
+                <label>스타일: <input type="text" id="editStyle" maxlength="10"/></label><br>
+                <label>소개: <input type="text" id="editSummary" maxlength="20"/></label><br>
+                <label>블로그 URL: <input type="url" id="editBlogURL" maxlength="2048"/></label><br>
                 <button type="button" id="saveProfileBtn" class="btn btn-primary">저장하기</button>
             </div>
+            
         </div>
     </div>
 </div>
@@ -311,21 +351,22 @@ document.getElementById("saveProfileBtn").addEventListener("click", async functi
               </div>
               <div class="body-contentbox">
                 <form id="myForm">
-                  <label for="memberName">이름 :</label>
-                  <input type="text" id="memberName" name="name" /><br />
-                  <label for="memberImage">프로필 이미지 url :</label>
-                  <input type="email" id="memberImage" name="email" /><br />
-                  <label for="memberAdvantages">강점 : </label>
-                  <input type="text" id="memberAdvantages" name="name" /><br />
-                  <label for="memberStyle">스타일 :</label>
-                  <input type="text" id="memberStyle" name="name" /><br />
-                  <label for="memberBlogUrl">블로그 url 주소 : </label>
-                  <input type="text" id="memberBlogUrl" name="name" /><br />
-                  <label for="memberMBTI">MBTI :</label>
-                  <input type="text" id="memberMBTI" name="name" /><br />
-                  <label for="memberSummary">간략소개 :</label>
-                  <input type="text" id="memberSummary" name="name" /><br />
+                    <label for="memberImage"></label>
+                    <input type="url" id="memberImage" name="email" placeholder="프로필 이미지 URL" maxlength="2048">
+                    <label for="memberName"></label>
+                    <input type="text" id="memberName" name="name" placeholder="이름" maxlength="10">
+                    <label for="memberAdvantages"></label>
+                    <input type="text" id="memberAdvantages" name="name" placeholder="강점" maxlength="20">  
+                    <label for="memberMBTI"></label>
+                    <input type="text" id="memberMBTI" name="name" placeholder="MBTI" maxlength="4">
+                    <label for="memberStyle"></label>
+                    <input type="text" id="memberStyle" name="name" placeholder="스타일" maxlength="10">
+                    <label for="memberSummary"></label>
+                    <input type="text" id="memberSummary" name="name" placeholder="간략소개" maxlength="20">
+                    <label for="memberBlogUrl"></label>
+                    <input type="url" id="memberBlogUrl" name="name" placeholder="블로그 URL 주소" maxlength="2048">
                 </form>
+                
               </div>
             </div>
           </div>
